@@ -192,18 +192,19 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="select-time">
+                            <div class="col-sm-6"></div>
                             <div class="col-sm-6">
-                                <p class="dashboard-by-text">Thống kê theo</p>
+                                <p class="dashboard-by-text">Thống kê từ</p>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="form-group dashboard-by">
-                                    <select class="form-control" name="time-select" id="time-select">
-                                        <option name="HOUR" value="HOUR">Giờ</option>
-                                        <option name="DAY" value="DAY">Ngày</option>
-                                        <option name="MONTH" value="MONTH">Tháng</option>
-                                    </select>
-                                </div>
-                            </div>
+                            <%--<div class="col-sm-6">--%>
+                                <%--<div class="form-group dashboard-by">--%>
+                                    <%--<select class="form-control" name="time-select" id="time-select">--%>
+                                        <%--<option name="HOUR" value="HOUR">Giờ</option>--%>
+                                        <%--<option name="DAY" value="DAY">Ngày</option>--%>
+                                        <%--<option name="MONTH" value="MONTH">Tháng</option>--%>
+                                    <%--</select>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
                         </div>
 
 

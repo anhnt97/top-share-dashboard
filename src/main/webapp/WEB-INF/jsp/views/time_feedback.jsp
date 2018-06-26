@@ -86,50 +86,6 @@
                     </button>
                     <h6 class="simple-text"> <strong>THỐNG KÊ THỜI GIAN PHẢN HỒI API </strong></h6>
                 </div>
-                <%--<div class="collapse navbar-collapse">--%>
-                    <%--<ul class="nav navbar-nav navbar-right">--%>
-                        <%--<li>--%>
-                            <%--<a href="#" class="dropdown-toggle" data-toggle="dropdown">--%>
-                                <%--<i class="material-icons">dashboard</i>--%>
-                                <%--<p class="hidden-lg hidden-md">Thống kê</p>--%>
-                            <%--</a>--%>
-                        <%--</li>--%>
-                        <%--<li class="dropdown">--%>
-                            <%--<a href="#" class="dropdown-toggle" data-toggle="dropdown">--%>
-                                <%--<i class="material-icons">notifications</i>--%>
-                                <%--<span class="notification">5</span>--%>
-                                <%--<p class="hidden-lg hidden-md">Notifications</p>--%>
-                            <%--</a>--%>
-                            <%--<ul class="dropdown-menu">--%>
-                                <%--<li>--%>
-                                    <%--<a href="#">Mike John responded to your email</a>--%>
-                                <%--</li>--%>
-                                <%--<li>--%>
-                                    <%--<a href="#">You have 5 new tasks</a>--%>
-                                <%--</li>--%>
-                                <%--<li>--%>
-                                    <%--<a href="#">You're now friend with Andrew</a>--%>
-                                <%--</li>--%>
-                                <%--<li>--%>
-                                    <%--<a href="#">Another Notification</a>--%>
-                                <%--</li>--%>
-                                <%--<li>--%>
-                                    <%--<a href="#">Another One</a>--%>
-                                <%--</li>--%>
-                            <%--</ul>--%>
-                        <%--</li>--%>
-                    <%--</ul>--%>
-                    <%--<form class="navbar-form navbar-right" role="search">--%>
-                        <%--<div class="form-group  is-empty">--%>
-                            <%--<input type="text" class="form-control" placeholder="Search">--%>
-                            <%--<span class="material-input"></span>--%>
-                        <%--</div>--%>
-                        <%--<button type="submit" class="btn btn-white btn-round btn-just-icon">--%>
-                            <%--<i class="material-icons">search</i>--%>
-                            <%--<div class="ripple-container"></div>--%>
-                        <%--</button>--%>
-                    <%--</form>--%>
-                <%--</div>--%>
             </div>
         </nav>
         <div class="content custom-content">
@@ -193,18 +149,19 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="select-time">
+                            <div class="col-sm-6"></div>
                             <div class="col-sm-6">
-                                <p class="dashboard-by-text">Thống kê theo</p>
+                                <p class="dashboard-by-text">Thống kê từ</p>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="form-group dashboard-by">
-                                    <select class="form-control" name="time-select" id="time-select">
-                                        <option name="HOUR" value="HOUR">Giờ</option>
-                                        <option name="DAY" value="DAY">Ngày</option>
-                                        <option name="MONTH" value="MONTH">Tháng</option>
-                                    </select>
-                                </div>
-                            </div>
+                            <%--<div class="col-sm-6">--%>
+                                <%--<div class="form-group dashboard-by">--%>
+                                    <%--<select class="form-control" name="time-select" id="time-select">--%>
+                                        <%--<option name="HOUR" value="HOUR">Giờ</option>--%>
+                                        <%--<option name="DAY" value="DAY">Ngày</option>--%>
+                                        <%--<option name="MONTH" value="MONTH">Tháng</option>--%>
+                                    <%--</select>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
                         </div>
 
 
@@ -274,40 +231,6 @@
                         </div>
                     </div>
                 </div>
-                <%--<div class="row">--%>
-                    <%--<div class="card">--%>
-                        <%--<div class="card-header card-chart" data-background-color="blue">--%>
-                            <%--<div class="ct-chart" id="dailyTimeFeedbackChart"></div>--%>
-                        <%--</div>--%>
-                        <%--<div class="card-content">--%>
-                            <%--<h4 class="title">Thống kê thời gian phản hồi API theo ngày</h4>--%>
-                            <%--<!--<p class="category">-->--%>
-                            <%--<!--<span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>-->--%>
-                        <%--</div>--%>
-                        <%--<div class="card-footer">--%>
-                            <%--<div class="stats">--%>
-                                <%--<i class="material-icons">access_time</i> updated 4 minutes ago--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-                <%--<div class="row">--%>
-                    <%--<div class="card">--%>
-                        <%--<div class="card-header card-chart" data-background-color="red">--%>
-                            <%--<div class="ct-chart" id="monthlyTimeFeedbackChart"></div>--%>
-                        <%--</div>--%>
-                        <%--<div class="card-content">--%>
-                            <%--<h4 class="title">Thống kê thời gian phản hồi API theo tháng</h4>--%>
-                            <%--<!--<p class="category">-->--%>
-                            <%--<!--<span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>-->--%>
-                        <%--</div>--%>
-                        <%--<div class="card-footer">--%>
-                            <%--<div class="stats">--%>
-                                <%--<i class="material-icons">access_time</i> updated 4 minutes ago--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">

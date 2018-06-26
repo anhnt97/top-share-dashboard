@@ -1,4 +1,4 @@
-var urlAPI = "http://7d2ff2f2.ngrok.io/";
+var urlAPI = "http://b05227b4.ngrok.io/";
 
 /**
  *  Total function using in time play video
@@ -24,19 +24,26 @@ timePlay = {
                   var dataDuration = data.content.data;
                   var typeTime = data.content.time;
                   var listDurationAvg=[];
+                  var listHour = [];
                   var listDay = [];
+                  var listMonth = [];
                   for(var i = 0; i < dataDuration.length ; i++) {
                       listDurationAvg.push(dataDuration[i].duration_avg/60000);
                       listDay.push(convertDateToDayMonth(dataDuration[i].dt));
+                      listHour.push(convertDateToHour(dataDuration[i].dt));
+                      listMonth.push(convertDateToMonthYear(dataDuration[i].dt));
                   }
                   if(typeTime === "HOUR"){
-                      timePlayChart.everyHour(listDurationAvg,listDay);
+                      $(".time-type").text("giờ");
+                      timePlayChart.everyHour(listDurationAvg,listHour);
                   }
                   else if (typeTime === "DAY"){
+                      $(".time-type").text("ngày");
                       timePlayChart.dailyTime(listDurationAvg,listDay);
                   }
                   else {
-                     timePlayChart.monthlyTime(listDurationAvg,listDay);
+                      $(".time-type").text("tháng");
+                     timePlayChart.monthlyTime(listDurationAvg,listMonth);
                   }
 
               },
@@ -75,16 +82,20 @@ timePlay = {
             var dataDuration = data.content.data;
             $('.page-number').text(dataDuration.page_len);
             var listDurationAvg=[];
+            var listHour = [];
             var listDay = [];
+            var listMonth = [];
             for(var i = 0; i < dataDuration.length ; i++) {
                 listDurationAvg.push(dataDuration[i].duration_avg/60000);
                 listDay.push(convertDateToDayMonth(dataDuration[i].dt));
+                listHour.push(convertDateToHour(dataDuration[i].dt));
+                listMonth.push(convertDateToDayMonth(dataDuration[i].dt));
             }
-            console.log(listDay);
+            console.log(listHour);
             switch (data.content.time){
                 case "HOUR" :
                     $(".time-type").text("giờ");
-                    timePlayChart.everyHour(listDurationAvg,listDay);
+                    timePlayChart.everyHour(listDurationAvg,listHour);
                     break;
                 case "DAY" :
                     $(".time-type").text("ngày");
@@ -92,7 +103,7 @@ timePlay = {
                     break;
                 case "MONTH" :
                     $(".time-type").text("tháng");
-                    timePlayChart.monthlyTime(listDurationAvg);
+                    timePlayChart.monthlyTime(listDurationAvg,listMonth);
                     break;
             }
         }
@@ -253,18 +264,25 @@ timeView = {
                     var dataDuration = data.content.data;
                     var typeTime = data.content.time;
                     var listDurationAvg=[];
+                    var listHour = [];
                     var listDay = [];
+                    var listMonth = [];
                     for(var i = 0; i < dataDuration.length ; i++) {
                         listDurationAvg.push(dataDuration[i].duration_avg/60000);
                         listDay.push(convertDateToDayMonth(dataDuration[i].dt));
+                        listHour.push(convertDateToHour(dataDuration[i].dt));
+                        listMonth.push(convertDateToMonthYear(dataDuration[i].dt));
                     }
                     if(typeTime === "HOUR"){
+                        $(".time-type").text("giờ");
                         timeViewChart.everyHour(listDurationAvg,listDay);
                     }
                     else if (typeTime === "DAY"){
+                        $(".time-type").text("ngày");
                         timeViewChart.dailyTime(listDurationAvg,listDay);
                     }
                     else {
+                        $(".time-type").text("tháng");
                         timeViewChart.monthlyTime(listDurationAvg,listDay);
                     }
 
@@ -304,9 +322,13 @@ timeView = {
                 $('.page-number').text(dataDuration.page_len);
                 var listDurationAvg=[];
                 var listDay = [];
+                var listHour = [];
+                var listMonth = [];
                 for(var i = 0; i < dataDuration.length ; i++) {
                     listDurationAvg.push(dataDuration[i].duration_avg/60000);
                     listDay.push(convertDateToDayMonth(dataDuration[i].dt));
+                    listHour.push(convertDateToHour(dataDuration[i].dt));
+                    listMonth.push(convertDateToMonthYear(dataDuration[i].dt));
                 }
                 console.log(listDay);
                 switch (data.content.time){
@@ -477,18 +499,25 @@ timeFeedbackAPI = {
                     var typeTime = data.content.time;
                     var listDurationAvg=[];
                     var listDay = [];
+                    var listHour = [];
+                    var listMonth = [];
                     for(var i = 0; i < dataDuration.length ; i++) {
                         listDurationAvg.push(dataDuration[i].duration_avg/60000);
                         listDay.push(convertDateToDayMonth(dataDuration[i].dt));
+                        listHour.push(convertDateToHour(dataDuration[i].dt));
+                        listMonth.push(convertDateToMonthYear(dataDuration[i].dt));
                     }
                     if(typeTime === "HOUR"){
-                        timeFeedbackAPIChart.everyHour(listDurationAvg,listDay);
+                        $('.time-type').text("giờ");
+                        timeFeedbackAPIChart.everyHour(listDurationAvg,listHour);
                     }
                     else if (typeTime === "DAY"){
+                        $('.time-type').text("ngày");
                         timeFeedbackAPIChart.dailyTime(listDurationAvg,listDay);
                     }
                     else {
-                        timeFeedbackAPIChart.monthlyTime(listDurationAvg,listDay);
+                        $('.time-type').text("tháng");
+                        timeFeedbackAPIChart.monthlyTime(listDurationAvg,listMonth);
                     }
 
                 },
@@ -528,15 +557,19 @@ timeFeedbackAPI = {
                 $('.page-number').text(dataDuration.page_len);
                 var listDurationAvg=[];
                 var listDay = [];
+                var listHour = [];
+                var listMonth = [];
                 for(var i = 0; i < dataDuration.length ; i++) {
                     listDurationAvg.push(dataDuration[i].duration_avg/60000);
                     listDay.push(convertDateToDayMonth(dataDuration[i].dt));
+                    listHour.push(convertDateToHour(dataDuration[i].dt));
+                    listMonth.push(convertDateToMonthYear(dataDuration[i].dt));
                 }
                 console.log(listDay);
                 switch (data.content.time){
                     case "HOUR" :
                         $(".time-type").text("giờ");
-                        timeFeedbackAPIChart.everyHour(listDurationAvg,listDay);
+                        timeFeedbackAPIChart.everyHour(listDurationAvg,listHour);
                         break;
                     case "DAY" :
                         $(".time-type").text("ngày");
@@ -544,7 +577,7 @@ timeFeedbackAPI = {
                         break;
                     case "MONTH" :
                         $(".time-type").text("tháng");
-                        timeFeedbackAPIChart.monthlyTime(listDurationAvg);
+                        timeFeedbackAPIChart.monthlyTime(listDurationAvg,listMonth);
                         break;
                 }
             }
@@ -893,5 +926,15 @@ function dashboardTotal() {
 function convertDateToDayMonth(datetimeStamp) {
     var date = new Date(datetimeStamp);
     var newDate = date.getDate() + "/" + (date.getMonth() + 1);
+    return newDate;
+}
+
+function convertDateToHour(datetimeStamp) {
+    var date = new Date(datetimeStamp);
+    return date.getHours();
+}
+function convertDateToMonthYear(datetimeStamp) {
+    var date = new Date(datetimeStamp);
+    var newDate = (date.getMonth() + 1 ) + "/" + date.getFullYear();
     return newDate;
 }

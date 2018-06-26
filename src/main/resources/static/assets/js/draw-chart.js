@@ -53,6 +53,15 @@ timePlayChart = {
                 labelInterpolationFnc: function(value) {
                     return value + 'm';
                 }
+            },
+            axisX: {
+                labelInterpolationFnc: function skipLabels(value, index, labels) {
+                    if(labels.length > 24) {
+                        return  null;
+                    } else {
+                        return value;
+                    }
+                }
             }
         };
 
@@ -60,7 +69,7 @@ timePlayChart = {
 
         md.startAnimationForLineChart(dailyTimePlayChart);
     },
-    monthlyTime: function (msgMonthTime) {
+    monthlyTime: function (msgMonthTime,listMonth) {
 
         var dataMonthlyTime = {
             labels: ['January', 'February', 'March', 'April', 'May',
@@ -79,6 +88,15 @@ timePlayChart = {
                 labelInterpolationFnc: function(value) {
                     return value + 'm';
                 }
+            },
+            axisX: {
+                labelInterpolationFnc: function skipLabels(value, index, labels) {
+                    if(labels.length > 24) {
+                        return  null;
+                    } else {
+                        return value;
+                    }
+                }
             }
         };
 
@@ -88,11 +106,11 @@ timePlayChart = {
     }
 };
 timeViewChart = {
-  everyHour: function (msgEveryHour) {
+  everyHour: function (msgEveryHour,listHour) {
       /* ----------==========     Every hour  view Chart initialization    ==========---------- */
 
       var dataEveryHourViewChart = {
-          labels: ['1', '2', '3', '4', '5', '6', '7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24'],
+          labels: listHour,
           series: [
               msgEveryHour
           ]
@@ -106,6 +124,15 @@ timeViewChart = {
           axisY: {
               labelInterpolationFnc: function(value) {
                   return value + 'ms';
+              }
+          },
+          axisX: {
+              labelInterpolationFnc: function skipLabels(value, index, labels) {
+                  if(labels.length > 24) {
+                      return  null;
+                  } else {
+                      return value;
+                  }
               }
           }
       };
@@ -131,6 +158,15 @@ timeViewChart = {
               labelInterpolationFnc: function(value) {
                   return value + 'ms';
               }
+          },
+          axisX: {
+              labelInterpolationFnc: function skipLabels(value, index, labels) {
+                  if(labels.length > 24) {
+                      return  null;
+                  } else {
+                      return value;
+                  }
+              }
           }
       };
 
@@ -138,7 +174,7 @@ timeViewChart = {
 
       animation.animationForLine(dailyTimeViewChart);
   },
-  monthlyTime: function (msgMonthTime) {
+  monthlyTime: function (msgMonthTime,listMonth) {
       /* ----------==========     Monthly time view Chart initialization    ==========---------- */
 
       var dataMonthlyTimeViewChart = {
@@ -158,6 +194,15 @@ timeViewChart = {
               labelInterpolationFnc: function(value) {
                   return value + 'ms';
               }
+          },
+          axisX: {
+              labelInterpolationFnc: function skipLabels(value, index, labels) {
+                  if(labels.length > 24) {
+                      return  null;
+                  } else {
+                      return value;
+                  }
+              }
           }
       };
 
@@ -167,11 +212,10 @@ timeViewChart = {
   }
 };
 timeFeedbackAPIChart = {
-    everyHour: function (msgEveryHour) {
+    everyHour: function (msgEveryHour,listHour) {
         /* ----------==========     Every hour  view Chart initialization    ==========---------- */
-        console.log(msgEveryHour);
         var dataEveryHour = {
-            labels: ['1', '2', '3', '4', '5', '6', '7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24'],
+            labels: listHour,
             series: [
                 msgEveryHour
             ]
@@ -185,6 +229,15 @@ timeFeedbackAPIChart = {
             axisY: {
                 labelInterpolationFnc: function(value) {
                     return value + 'm';
+                }
+            },
+            axisX: {
+                labelInterpolationFnc: function skipLabels(value, index, labels) {
+                    if(labels.length > 24) {
+                        return  null;
+                    } else {
+                        return value;
+                    }
                 }
             }
         };
@@ -210,6 +263,15 @@ timeFeedbackAPIChart = {
                 labelInterpolationFnc: function(value) {
                     return value + 'm';
                 }
+            },
+            axisX: {
+                labelInterpolationFnc: function skipLabels(value, index, labels) {
+                    if(labels.length > 24) {
+                        return  null;
+                    } else {
+                        return value;
+                    }
+                }
             }
         };
 
@@ -217,7 +279,7 @@ timeFeedbackAPIChart = {
 
         animation.animationForLine(dailyTimeFeedbackChart);
     },
-    monthlyTime: function (msgMonthTime) {
+    monthlyTime: function (msgMonthTime,listMonth) {
         /* ----------==========     Monthly time feed back API Chart initialization    ==========---------- */
 
         var dataMonthlyTimeFeedbackChart = {
@@ -246,16 +308,17 @@ timeFeedbackAPIChart = {
     }
 };
 linkDieChart = {
-    dailyTime: function (msgDaily) {
+    everyHour: function (lDailymotion,lYoutube,lStream,lWZ,lVideoDie,listHour) {
         /* ----------==========     Daily number link die Chart initialization    ==========---------- */
 
         var dataDailyNumberLinkDieChart = {
-            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            labels: listHour,
             series: [
-                [1, 2, -5,-3, 6, 4, 5],
-                [2, 3, -2,-3, 4, 2, 3],
-                [3, 5, -4,-3, 5, 3, 4],
-                [5, 4, -2,-3, 5, 6, 3]
+                lDailymotion,
+                lYoutube,
+                lStream,
+                lWZ,
+                lVideoDie
             ]
         };
 
@@ -269,6 +332,15 @@ linkDieChart = {
                     return value;
                 },
                 onlyInteger: true
+            },
+            axisX: {
+                labelInterpolationFnc: function skipLabels(value, index, labels) {
+                    if(labels.length > 24) {
+                        return  null;
+                    } else {
+                        return value;
+                    }
+                }
             }
         };
         var responsiveOptions = [
@@ -286,17 +358,67 @@ linkDieChart = {
             optionsDailyNumberLinkDieChart,responsiveOptions);
         animation.animationUpForBar(dailyNumberLinkDieChart);
     },
-    monthlyTime: function (msgMonth) {
+    dailyTime: function (lDailymotion,lYoutube,lStream,lWZ,lVideoDie,listDay) {
+        /* ----------==========     Daily number link die Chart initialization    ==========---------- */
+
+        var dataDailyNumberLinkDieChart = {
+            labels: listDay,
+            series: [
+                lDailymotion,
+                lYoutube,
+                lStream,
+                lWZ,
+                lVideoDie
+            ]
+        };
+
+        var optionsDailyNumberLinkDieChart = {
+            lineSmooth: Chartist.Interpolation.cardinal({
+                tension: 0
+            }),
+            height: 500 ,
+            axisY: {
+                labelInterpolationFnc: function(value) {
+                    return value;
+                },
+                onlyInteger: true
+            },
+            axisX: {
+                labelInterpolationFnc: function skipLabels(value, index, labels) {
+                    if(labels.length > 24) {
+                        return  null;
+                    } else {
+                        return value;
+                    }
+                }
+            }
+        };
+        var responsiveOptions = [
+            ['screen and (max-width: 640px)', {
+                seriesBarDistance: 5,
+                axisX: {
+                    labelInterpolationFnc: function (value) {
+                        return value[0];
+                    }
+                }
+            }]
+        ];
+
+        var dailyNumberLinkDieChart = new Chartist.Bar('#dailyTimeLinkDieChart',dataDailyNumberLinkDieChart,
+            optionsDailyNumberLinkDieChart,responsiveOptions);
+        animation.animationUpForBar(dailyNumberLinkDieChart);
+    },
+    monthlyTime: function (lDailymotion,lYoutube,lStream,lWZ,lVideoDie,listMonth) {
         /* ----------==========     Monthly number link die Chart initialization    ==========---------- */
 
         var dataMonthlyTime = {
-            labels: ['January', 'February', 'March', 'April', 'May',
-                'June', 'July','August','September','October','November','December'],
+            labels: listMonth,
             series: [
-                [1, 2, 5, 3, 6, 4, 5, 3, 5, 6, 1, 5],
-                [3, 3, 2, 3, 4, 2, 3, 5, 3, 6, 4, 5],
-                [2, 5, 4, 3, 5, 3, 4, 2, 3, 4, 2, 3],
-                [5, 4, 2, 3, 5, 6, 3, 4, 3, 5, 3, 4]
+                lDailymotion,
+                lYoutube,
+                lStream,
+                lWZ,
+                lVideoDie
             ]
         };
 
@@ -310,6 +432,15 @@ linkDieChart = {
                     return value;
                 },
                 onlyInteger: true
+            },
+            axisX: {
+                labelInterpolationFnc: function skipLabels(value, index, labels) {
+                    if(labels.length > 24) {
+                        return  null;
+                    } else {
+                        return value;
+                    }
+                }
             }
         };
         var responsiveOptions = [
