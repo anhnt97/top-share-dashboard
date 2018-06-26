@@ -1,0 +1,9 @@
+.dashboard-by-text{
+    padding-top: 35px;
+}
+.month-picker{
+    display: none;
+}
+.main-panel > .custom-content {
+    margin-top: 0px;
+}
