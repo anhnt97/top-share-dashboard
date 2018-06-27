@@ -60,7 +60,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="${contextPath}/time-feedback">
+                    <a href="${contextPath}/time-api-response">
                         <i class="material-icons">feedback</i>
                         <p>Thời gian phản hồi API</p>
                     </a>
@@ -86,116 +86,16 @@
                     </button>
                     <h6 class="simple-text"> <strong>THỐNG KÊ LINK HỎNG </strong></h6>
                 </div>
-                <%--<div class="collapse navbar-collapse">--%>
-                    <%--<ul class="nav navbar-nav navbar-right">--%>
-                        <%--<li>--%>
-                            <%--<a href="#" class="dropdown-toggle" data-toggle="dropdown">--%>
-                                <%--<i class="material-icons">dashboard</i>--%>
-                                <%--<p class="hidden-lg hidden-md">Thống kê</p>--%>
-                            <%--</a>--%>
-                        <%--</li>--%>
-                        <%--<li class="dropdown">--%>
-                            <%--<a href="#" class="dropdown-toggle" data-toggle="dropdown">--%>
-                                <%--<i class="material-icons">notifications</i>--%>
-                                <%--<span class="notification">5</span>--%>
-                                <%--<p class="hidden-lg hidden-md">Notifications</p>--%>
-                            <%--</a>--%>
-                            <%--<ul class="dropdown-menu">--%>
-                                <%--<li>--%>
-                                    <%--<a href="#">Mike John responded to your email</a>--%>
-                                <%--</li>--%>
-                                <%--<li>--%>
-                                    <%--<a href="#">You have 5 new tasks</a>--%>
-                                <%--</li>--%>
-                                <%--<li>--%>
-                                    <%--<a href="#">You're now friend with Andrew</a>--%>
-                                <%--</li>--%>
-                                <%--<li>--%>
-                                    <%--<a href="#">Another Notification</a>--%>
-                                <%--</li>--%>
-                                <%--<li>--%>
-                                    <%--<a href="#">Another One</a>--%>
-                                <%--</li>--%>
-                            <%--</ul>--%>
-                        <%--</li>--%>
-                    <%--</ul>--%>
-                    <%--<form class="navbar-form navbar-right" role="search">--%>
-                        <%--<div class="form-group  is-empty">--%>
-                            <%--<input type="text" class="form-control" placeholder="Search">--%>
-                            <%--<span class="material-input"></span>--%>
-                        <%--</div>--%>
-                        <%--<button type="submit" class="btn btn-white btn-round btn-just-icon">--%>
-                            <%--<i class="material-icons">search</i>--%>
-                            <%--<div class="ripple-container"></div>--%>
-                        <%--</button>--%>
-                    <%--</form>--%>
-                <%--</div>--%>
             </div>
         </nav>
         <div class="content custom-content">
             <div class="container-fluid">
-                <%--<div class="row">--%>
-                    <%--<div class="col-lg-4 col-md-6 col-sm-6">--%>
-                        <%--<div class="card card-stats">--%>
-                            <%--<div class="card-header" data-background-color="orange">--%>
-                                <%--<i class="material-icons">video_library</i>--%>
-                            <%--</div>--%>
-                            <%--<div class="card-content">--%>
-                                <%--<p class="category">Tổng số video</p>--%>
-                                <%--<h3 class="title">1000--%>
-                                    <%--<small>video</small>--%>
-                                <%--</h3>--%>
-                            <%--</div>--%>
-                            <%--<div class="card-footer">--%>
-                                <%--<div class="stats">--%>
-                                    <%--<i class="material-icons">av_timer</i> Cập nhật vừa xong--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                    <%--<div class="col-lg-4 col-md-6 col-sm-6">--%>
-                        <%--<div class="card card-stats">--%>
-                            <%--<div class="card-header" data-background-color="green">--%>
-                                <%--<i class="material-icons">av_timer</i>--%>
-                            <%--</div>--%>
-                            <%--<div class="card-content">--%>
-                                <%--<p class="category">Tổng thời gian xem</p>--%>
-                                <%--<h3 class="title">1000--%>
-                                    <%--<small>giờ</small>--%>
-                                <%--</h3>--%>
-                            <%--</div>--%>
-                            <%--<div class="card-footer">--%>
-                                <%--<div class="stats">--%>
-                                    <%--<i class="material-icons">av_timer</i> Cập nhật vừa xong--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                    <%--<div class="col-lg-4 col-md-6 col-sm-6">--%>
-                        <%--<div class="card card-stats">--%>
-                            <%--<div class="card-header" data-background-color="red">--%>
-                                <%--<i class="material-icons">info_outline</i>--%>
-                            <%--</div>--%>
-                            <%--<div class="card-content">--%>
-                                <%--<p class="category">Số link hỏng</p>--%>
-                                <%--<h3 class="title">75--%>
-                                    <%--<small>link</small>--%>
-                                <%--</h3>--%>
-                            <%--</div>--%>
-                            <%--<div class="card-footer">--%>
-                                <%--<div class="stats">--%>
-                                    <%--<i class="material-icons">av_timer</i> Cập nhật vừa xong--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="select-time">
                             <div class="col-sm-6"></div>
                             <div class="col-sm-6">
-                                <p class="dashboard-by-text">Thống kê theo</p>
+                                <p class="dashboard-by-text">Thống kê từ</p>
                             </div>
                             <%--<div class="col-sm-6">--%>
                                 <%--<div class="form-group dashboard-by">--%>
@@ -343,7 +243,6 @@
 <script src="assets/js/material-dashboard.js?v=1.2.0"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="assets/js/draw-chart.js"></script>
-<script src="assets/js/callAPI.js"></script>
 <script src="assets/js/process.js"></script>
 <!-- Include Date Range Picker -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

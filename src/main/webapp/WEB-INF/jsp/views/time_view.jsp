@@ -59,7 +59,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="${contextPath}/time-feedback">
+                    <a href="${contextPath}/time-api-response">
                         <i class="material-icons">feedback</i>
                         <p>Thời gian phản hồi API</p>
                     </a>
@@ -333,17 +333,15 @@
 <script src="assets/js/material-dashboard.js?v=1.2.0"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="assets/js/draw-chart.js"></script>
-<script src="assets/js/callAPI.js"></script>
 <script src="assets/js/process.js"></script>
 <!-- Include Date Range Picker -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         timeView.getListVideo(0);
-        //timeView.paginationPage();
-        timeView.updateTimeTypeSelect();
+        timeView.paginationPage();
         timeView.updateDateSelect();
-        updateNameVideo();
+        //updateNameVideo();
     });
 </script>
 </html>

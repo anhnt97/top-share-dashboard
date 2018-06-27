@@ -60,7 +60,7 @@
                     </a>
                 </li>
                 <li class="active">
-                    <a href="${contextPath}/time-feedback">
+                    <a href="${contextPath}/time-api-response">
                         <i class="material-icons">feedback</i>
                         <p>Thời gian phản hồi API</p>
                     </a>
@@ -218,7 +218,7 @@
                 <div class="row">
                     <div class="card">
                         <div class="card-header card-chart" data-background-color="green">
-                            <div class="ct-chart" id="timeFeedbackAPIChart"></div>
+                            <div class="ct-chart" id="timeApiResponseChart"></div>
                         </div>
                         <div class="card-content">
                             <h4 class="title">Thống kê thời gian phản hồi API theo giờ</h4>
@@ -235,18 +235,17 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header" data-background-color="purple">
-                                <h4 class="title">Danh sách video</h4>
+                                <h4 class="title">Danh sách API</h4>
                                 <%--<p class="category">Here is a subtitle for this table</p>--%>
                             </div>
                             <div class="card-content table-responsive">
                                 <table class="table">
                                     <thead class="text-primary">
-                                    <th>Tên video</th>
-                                    <th>Tổng lượt xem</th>
-                                    <th>Thời gian trung bình</th>
+                                    <th>Tên API</th>
+                                    <th>Thời gian phản hồi trung bình</th>
                                     <th>Thống kê</th>
                                     </thead>
-                                    <tbody class="display-list-video">
+                                    <tbody class="display-list-api">
                                     </tbody>
                                 </table>
                             </div>
@@ -290,7 +289,6 @@
 <script src="assets/js/material-dashboard.js?v=1.2.0"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="assets/js/draw-chart.js"></script>
-<script src="assets/js/callAPI.js"></script>
 <script src="assets/js/process.js"></script>
 <!-- Include Date Range Picker -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -298,10 +296,10 @@
     $(document).ready(function() {
         // Javascript method's body can be found in assets/js/demos.js
         //callAllApiTimeFeedback();
-        updateNameVideo();
-        timeFeedbackAPI.getListVideo(0);
-        timeFeedbackAPI.updateTimeTypeSelect();
-        timeFeedbackAPI.updateDateSelect();
+        timeApiResponse.getListApi(0);
+        timeApiResponse.paginationPage();
+        timeApiResponse.updateTimeTypeSelect();
+        timeApiResponse.updateDateSelect();
     });
 </script>
 

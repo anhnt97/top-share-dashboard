@@ -14,17 +14,11 @@ public class DashBoardController {
     public String timePlay(){
         return "time_play";
     }
-    @GetMapping("/time-play/{id}")
-    public String timePlay(@PathVariable("id") String id){
-        return "time_play";
-    }
     @GetMapping("/time-view")
-    public String timeView(){
-        return "time_view";
-    }
-    @GetMapping("/time-feedback")
+    public String timeView(){ return "time_view"; }
+    @GetMapping("/time-api-response")
     public String timeFeedback(){
-        return "time_feedback";
+        return "time_api_response";
     }
     @GetMapping("/link-die")
     public String linkDie(){

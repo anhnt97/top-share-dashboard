@@ -137,7 +137,7 @@ timeViewChart = {
           }
       };
       var everyHourViewChart = new Chartist.Line('#timeViewChart',dataEveryHourViewChart, optionsEveryHourViewChart);
-        animation.animationForLine(everyHourViewChart);
+        md.startAnimationForLineChart(everyHourViewChart);
   },
   dailyTime: function (listDuration,listDay) {
       /* ----------==========     Daily time view Chart initialization    ==========---------- */
@@ -171,8 +171,7 @@ timeViewChart = {
       };
 
       var dailyTimeViewChart = new Chartist.Line('#timeViewChart',dataDailyTime, optionsDailyTime);
-
-      animation.animationForLine(dailyTimeViewChart);
+      md.startAnimationForLineChart(dailyTimeViewChart);
   },
   monthlyTime: function (msgMonthTime,listMonth) {
       /* ----------==========     Monthly time view Chart initialization    ==========---------- */
@@ -211,9 +210,9 @@ timeViewChart = {
       animation.animationForLine(monthlyTimeViewChart);
   }
 };
-timeFeedbackAPIChart = {
+timeApiResponseChart = {
     everyHour: function (msgEveryHour,listHour) {
-        /* ----------==========     Every hour  view Chart initialization    ==========---------- */
+        /* ----------==========     Every hour  Api Response Chart initialization    ==========---------- */
         var dataEveryHour = {
             labels: listHour,
             series: [
@@ -241,20 +240,20 @@ timeFeedbackAPIChart = {
                 }
             }
         };
-        var everyHourFeedbackAPIChart = new Chartist.Line('#timeFeedbackAPIChart',dataEveryHour, optionsEveryHour);
-        animation.animationForLine(everyHourFeedbackAPIChart);
+        var everyHourFeedbackAPIChart = new Chartist.Line('#timeApiResponseChart',dataEveryHour, optionsEveryHour);
+        md.startAnimationForLineChart(everyHourFeedbackAPIChart);
     },
     dailyTime: function (listDuration,listDay) {
-        /* ----------==========     Daily time feedback Chart initialization    ==========---------- */
+        /* ----------==========     Daily time ApiResponse Chart initialization    ==========---------- */
 
-        var dataDailyTimeFeedbackChart = {
+        var dataDailyTimeApiResponseChart = {
             labels: listDay,
             series: [
                 listDuration
             ]
         };
 
-        var optionsDailyTimeFeedbackChart = {
+        var optionsDailyTimeApiResponseChart = {
             lineSmooth: Chartist.Interpolation.cardinal({
                 tension: 0
             }),
@@ -275,22 +274,20 @@ timeFeedbackAPIChart = {
             }
         };
 
-        var dailyTimeFeedbackChart = new Chartist.Line('#timeFeedbackChart',dataDailyTimeFeedbackChart, optionsDailyTimeFeedbackChart);
-
-        animation.animationForLine(dailyTimeFeedbackChart);
+        var dailyTimeApiResponseChart = new Chartist.Line('#timeApiResponseChart',dataDailyTimeApiResponseChart, optionsDailyTimeApiResponseChart);
+        md.startAnimationForLineChart(dailyTimeApiResponseChart);
     },
     monthlyTime: function (msgMonthTime,listMonth) {
-        /* ----------==========     Monthly time feed back API Chart initialization    ==========---------- */
+        /* ----------==========     Monthly time Api Response API Chart initialization    ==========---------- */
 
-        var dataMonthlyTimeFeedbackChart = {
-            labels: ['January', 'February', 'March', 'April', 'May',
-                'June', 'July','August','September','October','November','December'],
+        var dataMonthlyTimeApiResponseChart = {
+            labels: listMonth,
             series: [
                 msgMonthTime
             ]
         };
 
-        var optionsMonthlyTimeFeedbackChart = {
+        var optionsMonthlyTimeApiResponseChart = {
             lineSmooth: Chartist.Interpolation.cardinal({
                 tension: 0
             }),
@@ -302,9 +299,9 @@ timeFeedbackAPIChart = {
             }
         };
 
-        var monthlyTimeFeedbackChart = new Chartist.Line('#timeFeedbackChart',dataMonthlyTimeFeedbackChart, optionsMonthlyTimeFeedbackChart);
+        var monthlyTimeApiResponseChart = new Chartist.Line('#timeApiResponseChart',dataMonthlyTimeApiResponseChart, optionsMonthlyTimeApiResponseChart);
 
-        md.startAnimationForLineChart(monthlyTimeFeedbackChart);
+        md.startAnimationForLineChart(monthlyTimeApiResponseChart);
     }
 };
 linkDieChart = {

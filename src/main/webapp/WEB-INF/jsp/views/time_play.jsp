@@ -61,7 +61,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="${contextPath}/time-feedback">
+                    <a href="${contextPath}/time-api-response">
                         <i class="material-icons">feedback</i>
                         <p>Thời gian phản hồi API</p>
                     </a>
@@ -236,7 +236,6 @@
                             <table class="table" id="list-video-table">
                                 <thead class="text-primary">
                                 <th>Tên Video</th>
-                                <th>Tổng lượt xem</th>
                                 <th>Thời gian trung bình(ms)</th>
                                 <th>Thống kê</th>
                                 </thead>
@@ -260,7 +259,7 @@
                 <p class="copyright">
                     &copy;
                     <script>
-                        document.write(new Date().getFullYear())
+                        document.write(new Date().getFullYear().toString())
                     </script>
                     <a href="http://dtsgroup.com.vn">DTS group</a>
                 </p>
@@ -284,7 +283,6 @@
 <script src="assets/js/material-dashboard.js?v=1.2.0"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <%--<script src="assets/js/demo.js"></script>--%>
-<script src="assets/js/callAPI.js"></script>
 <script src="assets/js/draw-chart.js"></script>
 <script src="assets/js/process.js"></script>
 <!-- Include Date Range Picker -->

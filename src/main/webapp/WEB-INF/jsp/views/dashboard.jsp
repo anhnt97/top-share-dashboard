@@ -57,7 +57,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="${contextPath}/time-feedback">
+                    <a href="${contextPath}/time-api-response">
                         <i class="material-icons">feedback</i>
                         <p>Thời gian phản hồi API</p>
                     </a>
@@ -219,5 +219,4 @@
 <script src="assets/js/material-dashboard.js?v=1.2.0"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="assets/js/demo.js"></script>
-<script src="assets/js/callAPI.js"></script>
 </html>
