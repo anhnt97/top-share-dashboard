@@ -70,7 +70,7 @@ timePlayChart = {
             },
             axisX: {
                 labelInterpolationFnc: function skipLabels(value, index, labels) {
-                    if(labels.length > 24) {
+                    if(labels.length > 30) {
                         return  null;
                     } else {
                         return value;
@@ -204,7 +204,7 @@ timeViewChart = {
           },
           axisX: {
               labelInterpolationFnc: function skipLabels(value, index, labels) {
-                  if(labels.length > 24) {
+                  if(labels.length > 30) {
                       return  null;
                   } else {
                       return value;
@@ -286,7 +286,7 @@ timeApiResponseChart = {
                 left: 25
 
             },
-            height: 500,
+            height: 300,
             axisY: {
                 labelInterpolationFnc: function(value) {
                     return value + 'm';
@@ -329,7 +329,7 @@ timeApiResponseChart = {
                 left: 25
 
             },
-            height: 500 ,
+            height: 300 ,
             axisY: {
                 labelInterpolationFnc: function(value) {
                     return value + 'm';
@@ -337,7 +337,7 @@ timeApiResponseChart = {
             },
             axisX: {
                 labelInterpolationFnc: function skipLabels(value, index, labels) {
-                    if(labels.length > 24) {
+                    if(labels.length > 30) {
                         return  null;
                     } else {
                         return value;
@@ -373,7 +373,7 @@ timeApiResponseChart = {
                 left: 25
 
             },
-            height: 500 ,
+            height: 300 ,
             axisY: {
                 labelInterpolationFnc: function(value) {
                     return value + 'm';

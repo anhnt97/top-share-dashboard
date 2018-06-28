@@ -843,29 +843,37 @@ linkDie = {
                 dataType: 'json',
                 success: function (data) {
                     try {
-                        var dataDuration = data.content.data;
+                        var dataLinkDie = data.content.data;
                         var typeTime = data.content.time;
-                        var listDurationAvg = [];
+                        var listDailymotion = [];
+                        var listYoutube = [];
+                        var listStream = [];
+                        var listWZ = [];
+                        var listVideoError = [];
                         var listHour = [];
                         var listDay = [];
                         var listMonth = [];
-                        for (var i = 0; i < dataDuration.length; i++) {
-                            listDurationAvg.push(dataDuration[i].duration_avg / 60000);
-                            listDay.push(convertDateToDayMonth(dataDuration[i].dt));
-                            listHour.push(convertDateToHour(dataDuration[i].dt));
-                            listMonth.push(convertDateToMonthYear(dataDuration[i].dt));
+                        for (var i = 0; i < dataLinkDie.length; i++) {
+                            listDailymotion.push(dataLinkDie[i].dailymotion);
+                            listYoutube.push(dataLinkDie[i].youtube);
+                            listStream.push(dataLinkDie[i].stream);
+                            listWZ.push(dataLinkDie[i].wz);
+                            listVideoError.push(dataLinkDie[i].die);
+                            listDay.push(convertDateToDayMonth(dataLinkDie[i].dt));
+                            listHour.push(convertDateToHour(dataLinkDie[i].dt));
+                            listMonth.push(convertDateToMonthYear(dataLinkDie[i].dt));
                         }
                         if (typeTime === "HOUR") {
                             $(".time-type").text("giờ");
-                            linkDieChart.everyHour(listDurationAvg, listHour);
+                            linkDieChart.everyHour(listDailymotion,listYoutube,listStream,listWZ,listVideoError, listHour);
                         }
                         else if (typeTime === "DAY") {
                             $(".time-type").text("ngày");
-                            linkDieChart.dailyTime(listDurationAvg, listDay);
+                            linkDieChart.dailyTime(listDailymotion,listYoutube,listStream,listWZ,listVideoError, listDay);
                         }
                         else {
                             $(".time-type").text("tháng");
-                            linkDieChart.monthlyTime(listDurationAvg, listMonth);
+                            linkDieChart.monthlyTime(listDailymotion,listYoutube,listStream,listWZ,listVideoError, listMonth);
                         }
                     } catch (e) {
                         console.log("Không có dữ liệu!");
@@ -928,30 +936,38 @@ linkDie = {
             dataType: 'json',
             success: function (data) {
                 try {
-                    var dataDuration = data.content.data;
-                    var listDurationAvg = [];
+                    var dataLinkDie = data.content.data;
+                    var listDailymotion = [];
+                    var listYoutube = [];
+                    var listStream = [];
+                    var listWZ = [];
+                    var listVideoError = [];
                     var listDay = [];
                     var listHour = [];
                     var listMonth = [];
-                    for (var i = 0; i < dataDuration.length; i++) {
-                        listDurationAvg.push(dataDuration[i].duration_avg / 60000);
-                        listDay.push(convertDateToDayMonth(dataDuration[i].dt));
-                        listHour.push(convertDateToHour(dataDuration[i].dt));
-                        listMonth.push(convertDateToMonthYear(dataDuration[i].dt));
+                    for (var i = 0; i < dataLinkDie.length; i++) {
+                        listDailymotion.push(dataLinkDie[i].dailymotion);
+                        listYoutube.push(dataLinkDie[i].youtube);
+                        listStream.push(dataLinkDie[i].stream);
+                        listWZ.push(dataLinkDie[i].wz);
+                        listVideoError.push(dataLinkDie[i].die);
+                        listDay.push(convertDateToDayMonth(dataLinkDie[i].dt));
+                        listHour.push(convertDateToHour(dataLinkDie[i].dt));
+                        listMonth.push(convertDateToMonthYear(dataLinkDie[i].dt));
                     }
                     console.log(listDay);
                     switch (data.content.time) {
                         case "HOUR" :
                             $(".time-type").text("giờ");
-                            linkDie.everyHour(listDurationAvg, listHour);
+                            linkDie.everyHour(listDailymotion,listYoutube,listStream,listWZ,listVideoError, listHour);
                             break;
                         case "DAY" :
                             $(".time-type").text("ngày");
-                            linkDie.dailyTime(listDurationAvg, listDay);
+                            linkDie.dailyTime(listDailymotion,listYoutube,listStream,listWZ,listVideoError, listDay);
                             break;
                         case "MONTH" :
                             $(".time-type").text("tháng");
-                            linkDie.monthlyTime(listDurationAvg, listMonth);
+                            linkDie.monthlyTime(listDailymotion,listYoutube,listStream,listWZ,listVideoError, listMonth);
                             break;
                     }
                 } catch (e) {
