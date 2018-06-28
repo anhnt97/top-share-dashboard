@@ -11,7 +11,8 @@
     <title>Thống kê link hỏng</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
-    <!-- Bootstrap core CSS     -->
+    <!--  CSS     -->
+    <link href="assets/css/chartist-plugin-tooltip.css" rel="stylesheet" />
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
     <!--  Material Dashboard CSS    -->
@@ -107,8 +108,6 @@
                                 <%--</div>--%>
                             <%--</div>--%>
                         </div>
-
-
                     </div>
                     <div class="col-sm-4">
                         <form action="#" class="form-horizontal" method="post">
@@ -159,10 +158,34 @@
                         </form>
                     </div>
                 </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">
+                        <div class="dailymotion-box"></div>
+                        <p>Link dailymotion</p>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="youtube-box"></div>
+                        <p>Link youtube</p>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="stream-box"></div>
+                        <p>Link stream</p>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="wz-box"></div>
+                        <p>Link WZ</p>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="link-error"></div>
+                        <p>Video lỗi</p>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="card">
-                        <div class="card-header card-chart" data-background-color="green">
-                            <div class="ct-chart" id="timeDieChart"></div>
+                        <div class="card-header card-chart" data-background-color="blue">
+                            <div class="ct-chart" id="linkDieChart"></div>
                         </div>
                         <div class="card-content">
                             <h4 class="title">Thống kê số link hỏng theo <span class="time-type">giờ</span></h4>
@@ -178,12 +201,20 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header" data-background-color="purple">
-                                <h4 class="title">Số lượng link hỏng</h4>
+                                <h4 class="title">Tổng hợp link hỏng</h4>
                                 <%--<p class="category">Here is a subtitle for this table</p>--%>
                             </div>
                             <div class="card-content table-responsive">
                                 <table class="table">
+                                    <div class="nav navbar-right">
+                                        <span class="sort-text">Sắp xếp theo </span>
+                                        <select class="form-control" id="sort-video">
+                                            <option value="reduction">Thời gian giảm dần</option>
+                                            <option value="increase">Thời gian tăng dần</option>
+                                        </select>
+                                    </div>
                                     <thead class="text-primary">
+                                    <th>Tên video</th>
                                     <th>Link dailymotion</th>
                                     <th>Link youtube</th>
                                     <th>Link stream</th>
@@ -191,14 +222,51 @@
                                     <th>Video lỗi</th>
                                     <th>Thống kê</th>
                                     </thead>
-                                    <tbody class="display-list-link-die">
+                                    <tbody class="display-list-video">
                                     <tr>
+                                        <td>video 1</td>
                                         <td>10</td>
-                                        <td>20</td>
-                                        <td>30</td>
-                                        <td>40</td>
-                                        <td>50</td>
-                                        <td><button class="btn btn-primary" id="dashboard-link-die">Xem thống kê</button></td>
+                                        <td>23</td>
+                                        <td>13</td>
+                                        <td>32</td>
+                                        <td>15</td>
+                                        <td><button class="btn btn-primary">Xem thống kê</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>video 2</td>
+                                        <td>34</td>
+                                        <td>22</td>
+                                        <td>35</td>
+                                        <td>22</td>
+                                        <td>11</td>
+                                        <td><button class="btn btn-primary">Xem thống kê</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>video 3</td>
+                                        <td>18</td>
+                                        <td>22</td>
+                                        <td>11</td>
+                                        <td>37</td>
+                                        <td>25</td>
+                                        <td><button class="btn btn-primary">Xem thống kê</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>video 4</td>
+                                        <td>25</td>
+                                        <td>12</td>
+                                        <td>55</td>
+                                        <td>33</td>
+                                        <td>15</td>
+                                        <td><button class="btn btn-primary">Xem thống kê</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>video 5</td>
+                                        <td>13</td>
+                                        <td>21</td>
+                                        <td>13</td>
+                                        <td>11</td>
+                                        <td>25</td>
+                                        <td><button class="btn btn-primary">Xem thống kê</button></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -233,6 +301,7 @@
 <script src="assets/js/material.min.js" type="text/javascript"></script>
 <!--  Charts Plugin -->
 <script src="assets/js/chartist.min.js"></script>
+<script src="assets/js/chartist-plugin-tooltip.js"></script>
 <!--  Dynamic Elements plugin -->
 <script src="assets/js/arrive.min.js"></script>
 <!--  PerfectScrollbar Library -->
@@ -244,16 +313,17 @@
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="assets/js/draw-chart.js"></script>
 <script src="assets/js/process.js"></script>
+<script src="assets/js/moment.js"></script>
 <!-- Include Date Range Picker -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         // Javascript method's body can be found in assets/js/demos.js
         //callAllApiLinkDie();
-        //updateNameVideo();
-        //linkDie.getListLinkDie(0);
-        linkDie.updateTimeTypeSelect();
-        linkDie.updateDateSelect();
+        //linkDie.getListVideo(0);
+        //linkDie.updateTimeTypeSelect();
+       linkDie.updateDateSelect();
+        linkDie.getChartDefault();
     });
 </script>
 

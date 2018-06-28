@@ -10,7 +10,8 @@
     <title>Thống kê thời gian xem video</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
-    <!-- Bootstrap core CSS     -->
+    <!--  CSS     -->
+    <link href="assets/css/chartist-plugin-tooltip.css" rel="stylesheet" />
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
     <!--  Material Dashboard CSS    -->
@@ -283,6 +284,13 @@
                             </div>
                             <div class="card-content table-responsive">
                                 <table class="table">
+                                    <div class="nav navbar-right">
+                                        <span class="sort-text">Sắp xếp theo </span>
+                                        <select class="form-control" id="sort-video">
+                                            <option value="increase">Thời gian tăng dần</option>
+                                            <option value="reduction">Thời gian giảm dần</option>
+                                        </select>
+                                    </div>
                                     <thead class="text-primary">
                                     <th>Tên video</th>
                                     <th>Tổng lượt xem</th>
@@ -297,7 +305,7 @@
                     </div>
                 </div>
                     <div class="row text-center">
-                        <p class="page-number" hidden></p>
+                        <p class="page-number" hidden>0</p>
                         <ul class="pagination">
                         </ul>
                     </div>
@@ -308,7 +316,7 @@
                 <p class="copyright">
                     &copy;
                     <script>
-                        document.write(new Date().getFullYear())
+                        document.write(new Date().getFullYear().toString())
                     </script>
                     <a href="http://dtsgroup.com.vn">DTS group</a>
                 </p>
@@ -323,6 +331,7 @@
 <script src="assets/js/material.min.js" type="text/javascript"></script>
 <!--  Charts Plugin -->
 <script src="assets/js/chartist.min.js"></script>
+<script src="assets/js/chartist-plugin-tooltip.js"></script>
 <!--  Dynamic Elements plugin -->
 <script src="assets/js/arrive.min.js"></script>
 <!--  PerfectScrollbar Library -->
@@ -334,13 +343,15 @@
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="assets/js/draw-chart.js"></script>
 <script src="assets/js/process.js"></script>
+<script src="assets/js/moment.js"></script>
 <!-- Include Date Range Picker -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        timeView.getListVideo(0);
         timeView.paginationPage();
+        timeView.updateListVideo();
         timeView.updateDateSelect();
+        timeView.getChartDefault();
         //updateNameVideo();
     });
 </script>

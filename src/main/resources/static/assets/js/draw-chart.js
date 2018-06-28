@@ -12,24 +12,31 @@ timePlayChart = {
             lineSmooth: Chartist.Interpolation.cardinal({
                 tension: 0
             }),
-            height: 500 ,
+            chartPadding: {
+               top: 0,
+               right: 0,
+               bottom: 0,
+               left: 25
+
+            },
+            height: 300,
             axisY: {
-                chartPadding: {
-                    left: 5
-                },
                 labelInterpolationFnc: function(value) {
                     return value + 'm';
                 }
             },
             axisX: {
                 labelInterpolationFnc: function skipLabels(value, index, labels) {
-                    if(labels.length > 24) {
+                    if(labels.length > 48) {
                         return  null;
                     } else {
                         return value;
                     }
                 }
-            }
+            },
+            plugins: [
+                Chartist.plugins.tooltip()
+            ]
         };
 
         var everyHourPlayChart = new Chartist.Line('.ct-chart',dataEveryHour, optionsEveryHour);
@@ -48,7 +55,14 @@ timePlayChart = {
             lineSmooth: Chartist.Interpolation.cardinal({
                 tension: 0
             }),
-            height: 500 ,
+            chartPadding: {
+                top: 0,
+                right: 0,
+                bottom: 0,
+                left: 25
+
+            },
+            height: 300 ,
             axisY: {
                 labelInterpolationFnc: function(value) {
                     return value + 'm';
@@ -62,7 +76,10 @@ timePlayChart = {
                         return value;
                     }
                 }
-            }
+            },
+            plugins: [
+                Chartist.plugins.tooltip()
+            ]
         };
 
         var dailyTimePlayChart = new Chartist.Line('.ct-chart',dataDailyTime, optionsDailyTime);
@@ -72,8 +89,7 @@ timePlayChart = {
     monthlyTime: function (msgMonthTime,listMonth) {
 
         var dataMonthlyTime = {
-            labels: ['January', 'February', 'March', 'April', 'May',
-                'June', 'July','August','September','October','November','December'],
+            labels: listMonth,
             series: [
                 msgMonthTime
             ]
@@ -83,7 +99,14 @@ timePlayChart = {
             lineSmooth: Chartist.Interpolation.cardinal({
                 tension: 0
             }),
-            height: 500 ,
+            chartPadding: {
+                top: 0,
+                right: 0,
+                bottom: 0,
+                left: 25
+
+            },
+            height: 300 ,
             axisY: {
                 labelInterpolationFnc: function(value) {
                     return value + 'm';
@@ -91,13 +114,16 @@ timePlayChart = {
             },
             axisX: {
                 labelInterpolationFnc: function skipLabels(value, index, labels) {
-                    if(labels.length > 24) {
+                    if(labels.length > 12) {
                         return  null;
                     } else {
                         return value;
                     }
                 }
-            }
+            },
+            plugins: [
+                Chartist.plugins.tooltip()
+            ]
         };
 
         var monthlyTimePlayChart = new Chartist.Line('.ct-chart',dataMonthlyTime, optionsMonthlyTime);
@@ -120,21 +146,31 @@ timeViewChart = {
           lineSmooth: Chartist.Interpolation.cardinal({
               tension: 0
           }),
-          height: 500,
+          chartPadding: {
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 25
+
+          },
+          height: 300,
           axisY: {
               labelInterpolationFnc: function(value) {
-                  return value + 'ms';
+                  return value + 'm';
               }
           },
           axisX: {
               labelInterpolationFnc: function skipLabels(value, index, labels) {
-                  if(labels.length > 24) {
+                  if(labels.length > 48) {
                       return  null;
                   } else {
                       return value;
                   }
               }
-          }
+          },
+          plugins: [
+              Chartist.plugins.tooltip()
+          ]
       };
       var everyHourViewChart = new Chartist.Line('#timeViewChart',dataEveryHourViewChart, optionsEveryHourViewChart);
         md.startAnimationForLineChart(everyHourViewChart);
@@ -153,10 +189,17 @@ timeViewChart = {
           lineSmooth: Chartist.Interpolation.cardinal({
               tension: 0
           }),
-          height: 500,
+          chartPadding: {
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 25
+
+          },
+          height: 300,
           axisY: {
               labelInterpolationFnc: function(value) {
-                  return value + 'ms';
+                  return value + 'm';
               }
           },
           axisX: {
@@ -167,7 +210,10 @@ timeViewChart = {
                       return value;
                   }
               }
-          }
+          },
+          plugins: [
+              Chartist.plugins.tooltip()
+          ]
       };
 
       var dailyTimeViewChart = new Chartist.Line('#timeViewChart',dataDailyTime, optionsDailyTime);
@@ -177,8 +223,7 @@ timeViewChart = {
       /* ----------==========     Monthly time view Chart initialization    ==========---------- */
 
       var dataMonthlyTimeViewChart = {
-          labels: ['January', 'February', 'March', 'April', 'May',
-              'June', 'July','August','September','October','November','December'],
+          labels: listMonth,
           series: [
               msgMonthTime
           ]
@@ -188,21 +233,31 @@ timeViewChart = {
           lineSmooth: Chartist.Interpolation.cardinal({
               tension: 0
           }),
-          height: 500 ,
+          chartPadding: {
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 25
+
+          },
+          height: 300 ,
           axisY: {
               labelInterpolationFnc: function(value) {
-                  return value + 'ms';
+                  return value + 'm';
               }
           },
           axisX: {
               labelInterpolationFnc: function skipLabels(value, index, labels) {
-                  if(labels.length > 24) {
+                  if(labels.length > 12) {
                       return  null;
                   } else {
                       return value;
                   }
               }
-          }
+          },
+          plugins: [
+              Chartist.plugins.tooltip()
+          ]
       };
 
       var monthlyTimeViewChart = new Chartist.Line('#timeViewChart',dataMonthlyTimeViewChart, optionsMonthlyTimeViewChart);
@@ -224,6 +279,13 @@ timeApiResponseChart = {
             lineSmooth: Chartist.Interpolation.cardinal({
                 tension: 0
             }),
+            chartPadding: {
+                top: 0,
+                right: 0,
+                bottom: 0,
+                left: 25
+
+            },
             height: 500,
             axisY: {
                 labelInterpolationFnc: function(value) {
@@ -232,13 +294,16 @@ timeApiResponseChart = {
             },
             axisX: {
                 labelInterpolationFnc: function skipLabels(value, index, labels) {
-                    if(labels.length > 24) {
+                    if(labels.length > 48) {
                         return  null;
                     } else {
                         return value;
                     }
                 }
-            }
+            },
+            plugins: [
+                Chartist.plugins.tooltip()
+            ]
         };
         var everyHourFeedbackAPIChart = new Chartist.Line('#timeApiResponseChart',dataEveryHour, optionsEveryHour);
         md.startAnimationForLineChart(everyHourFeedbackAPIChart);
@@ -257,6 +322,13 @@ timeApiResponseChart = {
             lineSmooth: Chartist.Interpolation.cardinal({
                 tension: 0
             }),
+            chartPadding: {
+                top: 0,
+                right: 0,
+                bottom: 0,
+                left: 25
+
+            },
             height: 500 ,
             axisY: {
                 labelInterpolationFnc: function(value) {
@@ -271,7 +343,10 @@ timeApiResponseChart = {
                         return value;
                     }
                 }
-            }
+            },
+            plugins: [
+                Chartist.plugins.tooltip()
+            ]
         };
 
         var dailyTimeApiResponseChart = new Chartist.Line('#timeApiResponseChart',dataDailyTimeApiResponseChart, optionsDailyTimeApiResponseChart);
@@ -291,10 +366,17 @@ timeApiResponseChart = {
             lineSmooth: Chartist.Interpolation.cardinal({
                 tension: 0
             }),
+            chartPadding: {
+                top: 0,
+                right: 0,
+                bottom: 0,
+                left: 25
+
+            },
             height: 500 ,
             axisY: {
                 labelInterpolationFnc: function(value) {
-                    return value + 'ms';
+                    return value + 'm';
                 }
             }
         };
@@ -305,17 +387,25 @@ timeApiResponseChart = {
     }
 };
 linkDieChart = {
-    everyHour: function (lDailymotion,lYoutube,lStream,lWZ,lVideoDie,listHour) {
+    everyHour: function () {
         /* ----------==========     Daily number link die Chart initialization    ==========---------- */
 
         var dataDailyNumberLinkDieChart = {
-            labels: listHour,
+            // labels: listHour,
+            // series: [
+            //     lDailymotion,
+            //     lYoutube,
+            //     lStream,
+            //     lWZ,
+            //     lVideoDie
+            // ]
+            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
             series: [
-                lDailymotion,
-                lYoutube,
-                lStream,
-                lWZ,
-                lVideoDie
+                [1, 2, 5,3, 6, 4, 5],
+                [2, 3, 2,3, 4, 2, 3],
+                [3, 5, 4,3, 5, 3, 4],
+                [5, 4, 2,3, 5, 6, 3],
+                [3, 2, 1,6, 3, 1, 4]
             ]
         };
 
@@ -323,7 +413,7 @@ linkDieChart = {
             lineSmooth: Chartist.Interpolation.cardinal({
                 tension: 0
             }),
-            height: 500 ,
+            height: 400 ,
             axisY: {
                 labelInterpolationFnc: function(value) {
                     return value;
@@ -332,7 +422,7 @@ linkDieChart = {
             },
             axisX: {
                 labelInterpolationFnc: function skipLabels(value, index, labels) {
-                    if(labels.length > 24) {
+                    if(labels.length > 48) {
                         return  null;
                     } else {
                         return value;
@@ -351,7 +441,7 @@ linkDieChart = {
             }]
         ];
 
-        var dailyNumberLinkDieChart = new Chartist.Bar('#dailyTimeLinkDieChart',dataDailyNumberLinkDieChart,
+        var dailyNumberLinkDieChart = new Chartist.Bar('#linkDieChart',dataDailyNumberLinkDieChart,
             optionsDailyNumberLinkDieChart,responsiveOptions);
         animation.animationUpForBar(dailyNumberLinkDieChart);
     },
@@ -373,7 +463,7 @@ linkDieChart = {
             lineSmooth: Chartist.Interpolation.cardinal({
                 tension: 0
             }),
-            height: 500 ,
+            height: 400 ,
             axisY: {
                 labelInterpolationFnc: function(value) {
                     return value;
@@ -423,7 +513,7 @@ linkDieChart = {
             lineSmooth: Chartist.Interpolation.cardinal({
                 tension: 0
             }),
-            height: 500 ,
+            height: 400 ,
             axisY: {
                 labelInterpolationFnc: function(value) {
                     return value;
@@ -455,3 +545,28 @@ linkDieChart = {
        animation.animationUpForBar(monthlyTimeLinkDieChart);
     }
 };
+function testChart() {
+    var chart = new Chartist.Line('#timeApiResponseChart', {
+        labels: [1, 2, 3],
+        series: [
+            [
+                {meta: 'description', value: 1 },
+                {meta: 'description', value: 5},
+                {meta: 'description', value: 3}
+            ],
+            [
+                {meta: 'other description', value: 2},
+                {meta: 'other description', value: 4},
+                {meta: 'other description', value: 2}
+            ]
+        ]
+    }, {
+        low: 0,
+        high: 8,
+        fullWidth: true,
+        plugins: [
+            Chartist.plugins.tooltip()
+        ]
+    });
+
+}

@@ -19,6 +19,7 @@
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="assets/css/demo.css" rel="stylesheet" />
     <link href="assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/chartist-plugin-tooltip.css" rel="stylesheet" />
     <!--     Fonts and icons     -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons" rel='stylesheet'>
@@ -221,7 +222,7 @@
                             <div class="ct-chart" id="timeApiResponseChart"></div>
                         </div>
                         <div class="card-content">
-                            <h4 class="title">Thống kê thời gian phản hồi API theo giờ</h4>
+                            <h4 class="title">Thống kê thời gian phản hồi API theo <span class="time-type">giờ</span></h4>
                             <p class="name-video"></p>
                         </div>
                         <div class="card-footer">
@@ -240,6 +241,13 @@
                             </div>
                             <div class="card-content table-responsive">
                                 <table class="table">
+                                    <div class="nav navbar-right">
+                                        <span class="sort-text">Sắp xếp theo </span>
+                                        <select class="form-control" id="sort-video">
+                                            <option value="reduction">Thời gian giảm dần</option>
+                                            <option value="increase">Thời gian tăng dần</option>
+                                        </select>
+                                    </div>
                                     <thead class="text-primary">
                                     <th>Tên API</th>
                                     <th>Thời gian phản hồi trung bình</th>
@@ -253,7 +261,7 @@
                     </div>
                 </div>
                     <div class="row text-center">
-                        <p class="page-number" hidden></p>
+                        <p class="page-number" hidden>0</p>
                         <ul class="pagination">
                         </ul>
                     </div>
@@ -279,6 +287,7 @@
 <script src="assets/js/material.min.js" type="text/javascript"></script>
 <!--  Charts Plugin -->
 <script src="assets/js/chartist.min.js"></script>
+<script src="assets/js/chartist-plugin-tooltip.js"></script>
 <!--  Dynamic Elements plugin -->
 <script src="assets/js/arrive.min.js"></script>
 <!--  PerfectScrollbar Library -->
@@ -290,16 +299,19 @@
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="assets/js/draw-chart.js"></script>
 <script src="assets/js/process.js"></script>
+<script src="assets/js/moment.js"></script>
 <!-- Include Date Range Picker -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         // Javascript method's body can be found in assets/js/demos.js
         //callAllApiTimeFeedback();
-        timeApiResponse.getListApi(0);
+        timeApiResponse.updateListApi();
         timeApiResponse.paginationPage();
-        timeApiResponse.updateTimeTypeSelect();
+       // timeApiResponse.updateTimeTypeSelect();
         timeApiResponse.updateDateSelect();
+        timeApiResponse.getChartDefault();
+        //testChart();
     });
 </script>
 

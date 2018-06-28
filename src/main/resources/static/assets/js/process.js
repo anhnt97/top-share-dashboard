@@ -1,72 +1,79 @@
-var urlAPI = "http://45.124.95.231:2000/";
+ var urlAPI = "http://45.124.95.231:2000/";
 
 /**
  *  Total function using in time play video
  * @type {{getTimePlayChartTotal: timePlay.getTimePlayChartTotal, getTimePlayChartById: timePlay.getTimePlayChartById, getDataFromApi: timePlay.getDataFromApi, getListVideo: timePlay.getListVideo, displayListVideo: timePlay.displayListVideo, updateTimeTypeSelect: timePlay.updateTimeTypeSelect, updateDateSelect: timePlay.updateDateSelect, paginationPage: timePlay.paginationPage}}
  */
 timePlay = {
+    getChartDefault: function () {
+        var dateNow = moment().format('MM/DD/YYYY');
+        var yesterday = moment().add(-1, 'days').format('MM/DD/YYYY');
+        $('#start-date').val(yesterday);
+        $('#end-date').val(dateNow);
+        timePlay.getTimePlayChartTotal();
+    },
     /**
      *  Time play chart total
      */
     getTimePlayChartTotal: function () {
-      var startDate =  $('#start-date').val();
-      var endDate =  $('#end-date').val();
-      if (startDate !== ""){
-          var newStartDate = new Date(startDate).getTime();
-          var newEndDate = new Date(endDate).getTime();
-          var url = urlAPI +  "playvideo?start=" + newStartDate + "&end=" + newEndDate;
-          console.log(url);
-          $.ajax({
-              type: "GET",
-              url: url,
-              dataType: 'json',
-              success: function (data) {
-                  try{
-                      var dataDuration = data.content.data;
-                      var typeTime = data.content.time;
-                      var listDurationAvg=[];
-                      var listHour = [];
-                      var listDay = [];
-                      var listMonth = [];
-                      for(var i = 0; i < dataDuration.length ; i++) {
-                          listDurationAvg.push(dataDuration[i].duration_avg/60000);
-                          listDay.push(convertDateToDayMonth(dataDuration[i].dt));
-                          listHour.push(convertDateToHour(dataDuration[i].dt));
-                          listMonth.push(convertDateToMonthYear(dataDuration[i].dt));
-                      }
-                      if(typeTime === "HOUR"){
-                          $(".time-type").text("giờ");
-                          timePlayChart.everyHour(listDurationAvg,listHour);
-                      }
-                      else if (typeTime === "DAY"){
-                          $(".time-type").text("ngày");
-                          timePlayChart.dailyTime(listDurationAvg,listDay);
-                      }
-                      else {
-                          $(".time-type").text("tháng");
-                          timePlayChart.monthlyTime(listDurationAvg,listMonth);
-                      }
-                  }catch (e){
-                     alert("Không có dữ liệu!");
-                  }
-              },
-              error: function () {
-                  alert("Error!");
-              }
-          });
-      }
+        var startDate = $('#start-date').val();
+        var endDate = $('#end-date').val();
+        if (startDate !== "") {
+            var newStartDate = new Date(startDate).getTime();
+            var newEndDate = new Date(endDate).getTime();
+            var url = urlAPI + "play-video?start=" + newStartDate + "&end=" + newEndDate;
+            console.log(url);
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: 'json',
+                success: function (data) {
+                    try {
+                        var dataDuration = data.content.data;
+                        var typeTime = data.content.time;
+                        var listDurationAvg = [];
+                        var listHour = [];
+                        var listDay = [];
+                        var listMonth = [];
+                        for (var i = 0; i < dataDuration.length; i++) {
+                            listDurationAvg.push(dataDuration[i].duration_avg / 60000);
+                            listDay.push(convertDateToDayMonth(dataDuration[i].dt));
+                            listHour.push(convertDateToHour(dataDuration[i].dt));
+                            listMonth.push(convertDateToMonthYear(dataDuration[i].dt));
+                        }
+                        if (typeTime === "HOUR") {
+                            $(".time-type").text("giờ");
+                            timePlayChart.everyHour(listDurationAvg, listHour);
+                        }
+                        else if (typeTime === "DAY") {
+                            $(".time-type").text("ngày");
+                            timePlayChart.dailyTime(listDurationAvg, listDay);
+                        }
+                        else {
+                            $(".time-type").text("tháng");
+                            timePlayChart.monthlyTime(listDurationAvg, listMonth);
+                        }
+                    } catch (e) {
+                        console.log("Không có dữ liệu!");
+                    }
+                },
+                error: function () {
+                    console.log("Error!");
+                }
+            });
+        }
     },
     /**
      *  Time play chart by id video
      * @param idVideo
      */
-    getTimePlayChartById: function(idVideo) {
-    var startDate = $('#start-date').val();
-    var endDate = $('#end-date').val();
-        if (startDate !== "" && endDate !== ""){
+    getTimePlayChartById: function (idVideo) {
+        var startDate = $('#start-date').val();
+        var endDate = $('#end-date').val();
+        if (startDate !== "" && endDate !== "") {
             var newStartDate = new Date(startDate).getTime();
             var newEndDate = new Date(endDate).getTime();
-            var urlDayAPI = urlAPI + "videos/playvideo?start=" + newStartDate + "&end=" + newEndDate + "&post_id=" + idVideo;
+            var urlDayAPI = urlAPI + "play-video?start=" + newStartDate + "&end=" + newEndDate + "&post_id=" + idVideo;
             console.log(urlDayAPI);
             timePlay.getDataFromApi(urlDayAPI);
         }
@@ -75,160 +82,182 @@ timePlay = {
      *  Call api get data
      * @param urlApi
      */
-    getDataFromApi: function(urlApi) {
+    getDataFromApi: function (urlApi) {
         console.log(urlApi);
-    $.ajax({
-        type: "GET",
-        url: urlApi,
-        dataType: 'json',
-        success: function (data) {
-            try{
-                var dataDuration = data.content.data;
-                var listDurationAvg=[];
-                var listHour = [];
-                var listDay = [];
-                var listMonth = [];
-                for(var i = 0; i < dataDuration.length ; i++) {
-                    listDurationAvg.push(dataDuration[i].duration_avg/60000);
-                    listDay.push(convertDateToDayMonth(dataDuration[i].dt));
-                    listHour.push(convertDateToHour(dataDuration[i].dt));
-                    listMonth.push(convertDateToDayMonth(dataDuration[i].dt));
+        $.ajax({
+            type: "GET",
+            url: urlApi,
+            dataType: 'json',
+            success: function (data) {
+                try {
+                    var dataDuration = data.content.data;
+                    var listDurationAvg = [];
+                    var listHour = [];
+                    var listDay = [];
+                    var listMonth = [];
+                    for (var i = 0; i < dataDuration.length; i++) {
+                        listDurationAvg.push(dataDuration[i].duration_avg / 60000);
+                        listDay.push(convertDateToDayMonth(dataDuration[i].dt));
+                        listHour.push(convertDateToHour(dataDuration[i].dt));
+                        listMonth.push(convertDateToMonthYear(dataDuration[i].dt));
+                    }
+                    switch (data.content.time) {
+                        case "HOUR" :
+                            $(".time-type").text("giờ");
+                            timePlayChart.everyHour(listDurationAvg, listHour);
+                            break;
+                        case "DAY" :
+                            $(".time-type").text("ngày");
+                            timePlayChart.dailyTime(listDurationAvg, listDay);
+                            break;
+                        case "MONTH" :
+                            $(".time-type").text("tháng");
+                            timePlayChart.monthlyTime(listDurationAvg, listMonth);
+                            break;
+                    }
+                } catch (e) {
+                    console.log("Không có dữ liệu");
                 }
-                switch (data.content.time){
-                    case "HOUR" :
-                        $(".time-type").text("giờ");
-                        timePlayChart.everyHour(listDurationAvg,listHour);
-                        break;
-                    case "DAY" :
-                        $(".time-type").text("ngày");
-                        timePlayChart.dailyTime(listDurationAvg,listDay);
-                        break;
-                    case "MONTH" :
-                        $(".time-type").text("tháng");
-                        timePlayChart.monthlyTime(listDurationAvg,listMonth);
-                        break;
-                }
-            }catch (e){
-                alert("Không có dữ liệu");
             }
-        }
-    });
-},
+        });
+    },
+    /**
+     *
+     */
+    updateListVideo: function () {
+        var pageId = $('.page-number').text();
+        timePlay.getListVideo(pageId);
+        $('#sort-video').on('change', function () {
+            timePlay.getListVideo(pageId);
+        });
+    },
     /**
      *  get type and url api list video
      * @param pageId
      */
-    getListVideo: function(pageId) {
-    var timeType = $('.time-type').text();
-        timePlay.displayListVideo(urlAPI + "videos/playvideo?page=" + pageId);
-    // switch (timeType){
-    //     case "giờ" :
-    //         var urlHourAPI = urlAPI + "videos?page=" + pageId;
-    //         timePlay.displayListVideo(urlHourAPI);
-    //         break;
-    //     case "ngày" :
-    //         var urlDayAPI = urlAPI + "videos?page=" + pageId;
-    //         timePlay.displayListVideo(urlDayAPI);
-    //         break;
-    //     case "tháng" :
-    //         var urlMonthAPI = urlAPI + "videos?page=" + pageId;
-    //         timePlay.displayListVideo(urlMonthAPI);
-    //         break;
-    // }
-},
+    getListVideo: function (pageId) {
+        var timeType = $('.time-type').text();
+        var typeList = $('#sort-video').find(":selected").val();
+        if (typeList === "increase") {
+            timePlay.displayListVideo(urlAPI + "play-video?page=" + pageId + "&sort=ASC");
+        } else {
+            timePlay.displayListVideo(urlAPI + "play-video?page=" + pageId + "&sort=DESC");
+        }
+
+        // switch (timeType){
+        //     case "giờ" :
+        //         var urlHourAPI = urlAPI + "videos?page=" + pageId;
+        //         timePlay.displayListVideo(urlHourAPI);
+        //         break;
+        //     case "ngày" :
+        //         var urlDayAPI = urlAPI + "videos?page=" + pageId;
+        //         timePlay.displayListVideo(urlDayAPI);
+        //         break;
+        //     case "tháng" :
+        //         var urlMonthAPI = urlAPI + "videos?page=" + pageId;
+        //         timePlay.displayListVideo(urlMonthAPI);
+        //         break;
+        // }
+    },
     /**
      *  call api get list video
      * @param urlListVideo
      */
-    displayListVideo: function(urlListVideo) {
-    var displayVideo = $('.display-list-video');
-    var output = "";
-    console.log(urlListVideo);
+    displayListVideo: function (urlListVideo) {
+        var displayVideo = $('.display-list-video');
+        var output = "";
+        console.log(urlListVideo);
 
-    $.ajax({
-        type: "GET",
-        url: urlListVideo,
-        dataType: 'json',
-        success: function (result) {
-            var listVideo = result.content.data;
-            for(var i in listVideo){
-                output+="<tr><td>" + listVideo[i].post_id + "</td><td>" + listVideo[i].duration_avg + "</td>" +
-                    "</td><td><button class='btn btn-primary'  onclick=\" timePlay.getTimePlayChartById( '" + listVideo[i].post_id+ "'); " +
-                    "updateNameVideo( '"+ listVideo[i].post_id +"'); \">Xem thống kê</button></td></tr>";
+        $.ajax({
+            type: "GET",
+            url: urlListVideo,
+            dataType: 'json',
+            success: function (result) {
+                var listVideo = result.content.data;
+                for (var i in listVideo) {
+                    output += "<tr><td>" + listVideo[i].post_id + "</td><td>" + listVideo[i].duration_avg + "</td>" +
+                        "</td><td><button class='btn btn-primary'  onclick=\" timePlay.getTimePlayChartById( '" + listVideo[i].post_id + "'); " +
+                        "updateNameVideo( '" + listVideo[i].post_id + "'); \">Xem thống kê</button></td></tr>";
+                }
+                displayVideo.html(output);
             }
-            displayVideo.html(output);
-        }
-    });
-},
+        });
+    },
     /**
      *  update data after click time type
      */
-    updateTimeTypeSelect: function() {
+    updateTimeTypeSelect: function () {
         var valueTimeType = $('#time-select').find(":selected").text();
-        if (valueTimeType === "Giờ"){
+        if (valueTimeType === "Giờ") {
             $('.end-date-form').hide();
         }
-    $('#time-select').on('change', function () {
-        var valueSelected = $('#time-select').find(":selected").text();
-        // hien thi time type tren tieu de bieu do
-        $('.time-type').text(" " + valueSelected);
-        var idVideo = $('.name-video').text();
-        if (valueSelected === "Giờ"){
-            $('.end-date-form').hide();
-        }else {
-            $('.end-date-form').show();
-        }
-        if (idVideo !== ""){
-            timePlay.getTimePlayChartById(idVideo);
-        }else {
-            alert("Bạn chưa chọn video!");
-        }
-    });
-},
+        $('#time-select').on('change', function () {
+            var valueSelected = $('#time-select').find(":selected").text();
+            // hien thi time type tren tieu de bieu do
+            $('.time-type').text(" " + valueSelected);
+            var idVideo = $('.name-video').text();
+            if (valueSelected === "Giờ") {
+                $('.end-date-form').hide();
+            } else {
+                $('.end-date-form').show();
+            }
+            if (idVideo !== "") {
+                timePlay.getTimePlayChartById(idVideo);
+            } else {
+                console.log("Bạn chưa chọn video!");
+            }
+        });
+    },
     /**
      * Update data after click select date time
      */
-    updateDateSelect: function() {
-        var startDate = $('#start-date').val();
-    $('#start-date').datepicker({
-        onSelect: function(dateText, inst) {
-            var idVideo = $('.name-video').text();
-            var endDate = $('#end-date').val();
-            if(idVideo === "" && endDate !== ""){
-                timePlay.getTimePlayChartTotal();
+    updateDateSelect: function () {
+        $('#start-date').datepicker({
+            maxDate: moment().format('MM/DD/YYYY'),
+            onSelect: function (dateText, inst) {
+                var idVideo = $('.name-video').text();
+                var startDate = $('#start-date').val();
+                var endDate = $('#end-date').val();
+                if (idVideo === "" && endDate !== "") {
+                    timePlay.getTimePlayChartTotal();
+                }
+                else {
+                    timePlay.getTimePlayChartById(idVideo);
+                }
+                $("#end-date").datepicker("change", { minDate: moment(startDate).format('MM/DD/YYYY') });
             }
-            else{
-                timePlay.getTimePlayChartById(idVideo);
-            }
-        }
-    });
-    $('#end-date').datepicker({
-        minDate: new Date(startDate).getTime(),
-        onSelect: function(dateText, inst) {
-            var idVideo = $('.name-video').text();
-            var startDate = $('#start-date').val();
-            if (startDate !== "" && idVideo !== ""){
-                timePlay.getTimePlayChartById(idVideo);
-            }
-            else {
-                timePlay.getTimePlayChartTotal();
-            }
-        }
-    });
-},
+        });
+        $('#end-date').datepicker({
+            minDate:moment().add(-1,'days').format('MM/DD/YYYY'),
+            maxDate: moment().format('MM/DD/YYYY'),
+            onSelect: function (dateText, inst) {
+                var idVideo = $('.name-video').text();
+                var startDate = $('#start-date').val();
+                var endDate = $('#end-date').val();
+
+                if (startDate !== "" && idVideo !== "") {
+                    timePlay.getTimePlayChartById(idVideo);
+                }
+                else {
+                    timePlay.getTimePlayChartTotal();
+                }
+                $("#start-date").datepicker("change", { maxDate: moment(endDate).format('MM/DD/YYYY') });
+            },
+        });
+    },
     /**
      *  Pagination page after get data list video
      */
     paginationPage: function () {
         $.ajax({
             type: "GET",
-            url: urlAPI + "videos/playvideo?page=0",
+            url: urlAPI + "play-video?page=0",
             dataType: 'json',
             success: function (data) {
-               var pageNumber = data.content.total_size/10;
-                var pagination  = "";
-                for (var i = 0 ; i < pageNumber ; i++){
-                    pagination+= " <li><a href=\"#\" onclick='timePlay.getListVideo("+ i +")'>"+ (i + 1) +"</a></li>";
+                var pageNumber = data.content.total_size / 10;
+                var pagination = "";
+                for (var i = 0; i < pageNumber; i++) {
+                    pagination += " <li><a href=\"#\" onclick='timePlay.getListVideo(" + i + ")'>" + (i + 1) + "</a></li>";
                 }
                 // pagination+= "<li><a>....</a></li>";
                 // for(var i = pageNumber ; i > pageNumber - 5 ; i--){
@@ -236,13 +265,15 @@ timePlay = {
                 // }
                 $(".pagination").html(pagination);
                 $('.pagination li:first').addClass('active');
-                $( '.pagination li' ).on( 'click', function() {
-                    $( this ).parent().find( 'li.active' ).removeClass( 'active' );
-                    $( this ).addClass( 'active' );
+                $('.page-number').val(0);
+                $('.pagination li').on('click', function () {
+                    $(this).parent().find('li.active').removeClass('active');
+                    $(this).addClass('active');
+                    $('.page-number').val($(this).children().text());
                 });
             },
             error: function () {
-                alert("Error get list video!");
+                console.log("Error get list video!");
             }
         });
     }
@@ -252,53 +283,60 @@ timePlay = {
  * @type {{getTimeViewChartTotal: timeView.getTimeViewChartTotal, getTimeViewChartById: timeView.getTimeViewChartById, getDataFromApi: timeView.getDataFromApi, getListVideo: timeView.getListVideo, displayListVideo: timeView.displayListVideo, updateTimeTypeSelect: timeView.updateTimeTypeSelect, updateDateSelect: timeView.updateDateSelect, paginationPage: timeView.paginationPage}}
  */
 timeView = {
+    getChartDefault: function () {
+        var dateNow = moment().format('MM/DD/YYYY');
+        var yesterday = moment().add(-1, 'days').format('MM/DD/YYYY');
+        $('#start-date').val(yesterday);
+        $('#end-date').val(dateNow);
+        timeView.getTimeViewChartTotal();
+    },
     /**
      *  Time view chart total
      */
     getTimeViewChartTotal: function () {
-        var startDate =  $('#start-date').val();
-        var endDate =  $('#end-date').val();
-        if (startDate !== ""){
+        var startDate = $('#start-date').val();
+        var endDate = $('#end-date').val();
+        if (startDate !== "") {
             var newStartDate = new Date(startDate).getTime();
             var newEndDate = new Date(endDate).getTime();
-            var url = urlAPI +  "videos/watchtime?start=" + newStartDate + "&end=" + newEndDate;
+            var url = urlAPI + "watch-time?start=" + newStartDate + "&end=" + newEndDate;
             console.log(url);
             $.ajax({
                 type: "GET",
                 url: url,
                 dataType: 'json',
                 success: function (data) {
-                  try{
-                      var dataDuration = data.content.data;
-                      var typeTime = data.content.time;
-                      var listDurationAvg=[];
-                      var listHour = [];
-                      var listDay = [];
-                      var listMonth = [];
-                      for(var i = 0; i < dataDuration.length ; i++) {
-                          listDurationAvg.push(dataDuration[i].duration_avg/60000);
-                          listDay.push(convertDateToDayMonth(dataDuration[i].dt));
-                          listHour.push(convertDateToHour(dataDuration[i].dt));
-                          listMonth.push(convertDateToMonthYear(dataDuration[i].dt));
-                      }
-                      if(typeTime === "HOUR"){
-                          $(".time-type").text("giờ");
-                          timeViewChart.everyHour(listDurationAvg,listHour);
-                      }
-                      else if (typeTime === "DAY"){
-                          $(".time-type").text("ngày");
-                          timeViewChart.dailyTime(listDurationAvg,listDay);
-                      }
-                      else {
-                          $(".time-type").text("tháng");
-                          timeViewChart.monthlyTime(listDurationAvg,listDay);
-                      }
-                  }catch (e){
-                     alert("Không có dữ liệu");
-                  }
+                    try {
+                        var dataDuration = data.content.data;
+                        var typeTime = data.content.time;
+                        var listDurationAvg = [];
+                        var listHour = [];
+                        var listDay = [];
+                        var listMonth = [];
+                        for (var i = 0; i < dataDuration.length; i++) {
+                            listDurationAvg.push(dataDuration[i].duration_avg / 60000);
+                            listDay.push(convertDateToDayMonth(dataDuration[i].dt));
+                            listHour.push(convertDateToHour(dataDuration[i].dt));
+                            listMonth.push(convertDateToMonthYear(dataDuration[i].dt));
+                        }
+                        if (typeTime === "HOUR") {
+                            $(".time-type").text("giờ");
+                            timeViewChart.everyHour(listDurationAvg, listHour);
+                        }
+                        else if (typeTime === "DAY") {
+                            $(".time-type").text("ngày");
+                            timeViewChart.dailyTime(listDurationAvg, listDay);
+                        }
+                        else {
+                            $(".time-type").text("tháng");
+                            timeViewChart.monthlyTime(listDurationAvg, listMonth);
+                        }
+                    } catch (e) {
+                        console.log("Không có dữ liệu");
+                    }
                 },
                 error: function () {
-                    alert("Error call api !");
+                    console.log("Error call api !");
                 }
             });
         }
@@ -307,13 +345,13 @@ timeView = {
      *  Time view chart by id video
      *  @param idVideo
      */
-    getTimeViewChartById: function(idVideo) {
+    getTimeViewChartById: function (idVideo) {
         var startDate = $('#start-date').val();
         var endDate = $('#end-date').val();
-        if (startDate !== "" && endDate !== ""){
+        if (startDate !== "" && endDate !== "") {
             var newStartDate = new Date(startDate).getTime();
             var newEndDate = new Date(endDate).getTime();
-            var urlDayAPI = urlAPI + "videos/watchtime?start=" + newStartDate + "&end=" + newEndDate + "&post_id=" + idVideo;
+            var urlDayAPI = urlAPI + "watch-time?start=" + newStartDate + "&end=" + newEndDate + "&post_id=" + idVideo;
             console.log(urlDayAPI);
             timeView.getDataFromApi(urlDayAPI);
         }
@@ -322,41 +360,41 @@ timeView = {
      *  call api get data
      *  @param urlApi
      */
-    getDataFromApi: function(urlApi) {
+    getDataFromApi: function (urlApi) {
         $.ajax({
             type: "GET",
             url: urlApi,
             dataType: 'json',
             success: function (data) {
-                try{
+                try {
                     var dataDuration = data.content.data;
-                    var listDurationAvg=[];
+                    var listDurationAvg = [];
                     var listDay = [];
                     var listHour = [];
                     var listMonth = [];
-                    for(var i = 0; i < dataDuration.length ; i++) {
-                        listDurationAvg.push(dataDuration[i].duration_avg/60000);
+                    for (var i = 0; i < dataDuration.length; i++) {
+                        listDurationAvg.push(dataDuration[i].duration_avg / 60000);
                         listDay.push(convertDateToDayMonth(dataDuration[i].dt));
                         listHour.push(convertDateToHour(dataDuration[i].dt));
                         listMonth.push(convertDateToMonthYear(dataDuration[i].dt));
                     }
                     console.log(listDay);
-                    switch (data.content.time){
+                    switch (data.content.time) {
                         case "HOUR" :
                             $(".time-type").text("giờ");
-                            timeViewChart.everyHour(listDurationAvg,listHour);
+                            timeViewChart.everyHour(listDurationAvg, listHour);
                             break;
                         case "DAY" :
                             $(".time-type").text("ngày");
-                            timeViewChart.dailyTime(listDurationAvg,listDay);
+                            timeViewChart.dailyTime(listDurationAvg, listDay);
                             break;
                         case "MONTH" :
                             $(".time-type").text("tháng");
-                            timeViewChart.monthlyTime(listDurationAvg,listMonth);
+                            timeViewChart.monthlyTime(listDurationAvg, listMonth);
                             break;
                     }
-                }catch (e){
-                    alert("Không có dữ liệu");
+                } catch (e) {
+                    console.log("Không có dữ liệu");
                 }
             }
         });
@@ -365,12 +403,14 @@ timeView = {
      * get url and id video
      * @param idPage
      */
-    getListVideo: function(idPage) {
-        var timeType = $('.time-type').val();
-        if(idPage === ""){
-            idPage = 0;
-        }
-        timeView.displayListVideo(urlAPI + "videos?page=" + idPage);
+    getListVideo: function (pageId) {
+        // var timeType = $('.time-type').text();
+            var typeList = $('#sort-video').find(":selected").val();
+            if (typeList === "increase") {
+                timeView.displayListVideo(urlAPI + "videos?page=" + pageId + "&sort=ASC");
+            } else {
+                timeView.displayListVideo(urlAPI + "videos?page=" + pageId + "&sort=DESC");
+            }
         // switch (timeType){
         //     case "HOUR" :
         //         var urlHourAPI = "http://192.168.100.8:1999/videos?page=" + idPage;
@@ -386,11 +426,18 @@ timeView = {
         //         break;
         // }
     },
+    updateListVideo: function () {
+        var pageId = $('.page-number').text();
+        timeView.getListVideo(pageId);
+        $('#sort-video').on('change', function () {
+            timeView.getListVideo(pageId);
+        });
+    },
     /**
      *  call api get list video and display in client
      * @param urlListVideo
      */
-    displayListVideo: function(urlListVideo) {
+    displayListVideo: function (urlListVideo) {
         var displayVideo = $('.display-list-video');
         var output = "";
         $.ajax({
@@ -399,9 +446,9 @@ timeView = {
             dataType: 'json',
             success: function (result) {
                 var result_data = result.content.data;
-                for(var i in result_data){
-                    output+="<tr><td>" + result_data[i].post_id + "</td><td>" + result_data[i].total_view + "</td><td>" + result_data[i].duration_avg + "</td>" +
-                        "</td><td><button class='btn btn-primary'  onclick=\" timeView.getTimeViewChartById( '" + result_data[i].post_id+ "'); updateNameVideo('"+ result_data[i].post_id +"'); \">Xem thống kê</button></td></tr>";
+                for (var i in result_data) {
+                    output += "<tr><td>" + result_data[i].post_id + "</td><td>" + result_data[i].total_view + "</td><td>" + result_data[i].duration_avg + "</td>" +
+                        "</td><td><button class='btn btn-primary'  onclick=\" timeView.getTimeViewChartById( '" + result_data[i].post_id + "'); updateNameVideo('" + result_data[i].post_id + "'); \">Xem thống kê</button></td></tr>";
                 }
                 displayVideo.html(output);
             }
@@ -410,9 +457,9 @@ timeView = {
     /**
      *  update data after click change type time
      */
-    updateTimeTypeSelect: function() {
+    updateTimeTypeSelect: function () {
         var valueTimeType = $('#time-select').find(":selected").text();
-        if (valueTimeType === "Giờ"){
+        if (valueTimeType === "Giờ") {
             $('.end-date-form').hide();
         }
         $('#time-select').on('change', function () {
@@ -432,31 +479,36 @@ timeView = {
     /**
      * update data after click change date time
      */
-    updateDateSelect: function() {
-        var startDate = $('#start-date').val();
+    updateDateSelect: function () {
         $('#start-date').datepicker({
-            onSelect: function(dateText, inst) {
+            maxDate: moment().format('MM/DD/YYYY'),
+            onSelect: function (dateText, inst) {
                 var idVideo = $('.name-video').text();
+                var startDate = $('#start-date').val();
                 var endDate = $('#end-date').val();
-                if(idVideo === "" && endDate !== ""){
+                if (idVideo === "" && endDate !== "") {
                     timeView.getTimeViewChartTotal();
                 }
-                else{
+                else {
                     timeView.getTimeViewChartById(idVideo);
                 }
+                $("#end-date").datepicker("change", { minDate: moment(startDate).format('MM/DD/YYYY') });
             }
         });
         $('#end-date').datepicker({
-            minDate: new Date(startDate).getTime(),
-            onSelect: function(dateText, inst) {
+            minDate: moment().add(-1,'days').format('MM/DD/YYYY'),
+            maxDate: moment().format('MM/DD/YYYY'),
+            onSelect: function (dateText, inst) {
                 var idVideo = $('.name-video').text();
                 var startDate = $('#start-date').val();
-                if (startDate !== "" && idVideo !== ""){
+                var endDate = $('#end-date').val();
+                if (startDate !== "" && idVideo !== "") {
                     timeView.getTimeViewChartById(idVideo);
                 }
                 else {
                     timeView.getTimeViewChartTotal();
                 }
+                $("#start-date").datepicker("change", { maxDate: moment(endDate).format('MM/DD/YYYY') });
             }
         });
     },
@@ -469,10 +521,10 @@ timeView = {
             url: urlAPI + "videos?page=0",
             dataType: 'json',
             success: function (data) {
-                var pageNumber = data.content.total_size;
-                var pagination  = "";
-                for (var i = 0 ; i < pageNumber ; i++){
-                    pagination+= " <li><a href=\"#\" onclick='timeView.getListVideo("+ i +")'>"+ (i + 1) +"</a></li>";
+                var pageNumber = data.content.total_size/10;
+                var pagination = "";
+                for (var i = 0; i < pageNumber; i++) {
+                    pagination += "<li><a href=\"#\" onclick='timeView.getListVideo(" + i + ")'>" + (i + 1) + "</a></li>";
                 }
                 // pagination+= "<li><a>....</a></li>";
                 // for(var i = pageNumber ; i > pageNumber - 5 ; i--){
@@ -480,13 +532,14 @@ timeView = {
                 // }
                 $(".pagination").html(pagination);
                 $('.pagination li:first').addClass('active');
-                $( '.pagination li' ).on( 'click', function() {
-                    $( this ).parent().find( 'li.active' ).removeClass( 'active' );
-                    $( this ).addClass( 'active' );
+                $('.pagination li').on('click', function () {
+                    $(this).parent().find('li.active').removeClass('active');
+                    $(this).addClass('active');
+                    $('.page-number').val($(this).children().text());
                 });
             },
             error: function () {
-                alert("Error get list video!");
+                console.log("Error get list video!");
             }
         });
     }
@@ -494,58 +547,64 @@ timeView = {
 };
 /**
  *  Total function using time timeApiResponse
- * @type {{getTimeApiResponseChartById: timeApiResponse.getTimeApiResponseById, getDataFromApi: timeApiResponse.getDataFromApi, getListVideo: timeApiResponse.getListVideo, displayListVideo: timeApiResponse.displayListVideo, updateTimeTypeSelect: timeFeedbackAPI.updateTimeTypeSelect, updateDateSelect: timeApiResponse.updateDateSelect, paginationPage: timeApiResponse.paginationPage}}
+ * @type {{getTimeApiResponseChartById: timeApiResponse.getTimeApiResponseChartById, getDataFromApi: timeApiResponse.getDataFromApi, getListVideo: timeApiResponse.getListVideo, displayListVideo: timeApiResponse.displayListVideo, updateTimeTypeSelect: timeApiResponse.updateTimeTypeSelect, updateDateSelect: timeApiResponse.updateDateSelect, paginationPage: timeApiResponse.paginationPage}}
  */
 timeApiResponse = {
+    getChartDefault: function () {
+        var dateNow = moment().format('MM/DD/YYYY');
+        var yesterday = moment().add(-1, 'days').format('MM/DD/YYYY');
+        $('#start-date').val(yesterday);
+        $('#end-date').val(dateNow);
+        timeApiResponse.getTimeApiResponseChartTotal();
+    },
     /**
      *  Time api response chart total
      */
     getTimeApiResponseChartTotal: function () {
-        var startDate =  $('#start-date').val();
-        var endDate =  $('#end-date').val();
-        if (startDate !== ""){
+        var startDate = $('#start-date').val();
+        var endDate = $('#end-date').val();
+        if (startDate !== "") {
             var newStartDate = new Date(startDate).getTime();
             var newEndDate = new Date(endDate).getTime();
-            var url = urlAPI +  "videos/api-response?start=" + newStartDate + "&end=" + newEndDate;
+            var url = urlAPI + "api-response?start=" + newStartDate + "&end=" + newEndDate;
             console.log(url);
             $.ajax({
                 type: "GET",
                 url: url,
                 dataType: 'json',
                 success: function (data) {
-                    try{
+                    try {
                         var dataDuration = data.content.data;
                         var typeTime = data.content.time;
-                        var listDurationAvg=[];
+                        var listDurationAvg = [];
                         var listDay = [];
                         var listHour = [];
                         var listMonth = [];
-                        for(var i = 0; i < dataDuration.length ; i++) {
-                            listDurationAvg.push(dataDuration[i].duration_avg/60000);
+                        for (var i = 0; i < dataDuration.length; i++) {
+                            listDurationAvg.push(dataDuration[i].duration_avg / 60000);
                             listDay.push(convertDateToDayMonth(dataDuration[i].dt));
                             listHour.push(convertDateToHour(dataDuration[i].dt));
                             listMonth.push(convertDateToMonthYear(dataDuration[i].dt));
                         }
-                        if(typeTime === "HOUR"){
+                        if (typeTime === "HOUR") {
                             $('.time-type').text("giờ");
-                            timeApiResponseChart.everyHour(listDurationAvg,listHour);
+                            timeApiResponseChart.everyHour(listDurationAvg, listHour);
                         }
-                        else if (typeTime === "DAY"){
+                        else if (typeTime === "DAY") {
                             $('.time-type').text("ngày");
-                            timeApiResponseChart.dailyTime(listDurationAvg,listDay);
+                            timeApiResponseChart.dailyTime(listDurationAvg, listDay);
                         }
                         else {
                             $('.time-type').text("tháng");
-                            timeApiResponseChart.monthlyTime(listDurationAvg,listMonth);
+                            timeApiResponseChart.monthlyTime(listDurationAvg, listMonth);
                         }
 
-                    }catch (e){
-                        alert("Không có dữ liệu");
+                    } catch (e) {
+                        console.log("Không có dữ liệu");
                     }
-
                 },
                 error: function () {
-                    alert("Error!");
+                    console.log("Error!");
                 }
             });
         }
@@ -554,13 +613,13 @@ timeApiResponse = {
      *  Time feedback chart by id video
      * @param idVideo
      */
-    getTimeApiResponseChartById: function(idVideo) {
+    getTimeApiResponseChartById: function (idVideo) {
         var startDate = $('#start-date').val();
         var endDate = $('#end-date').val();
-        if (startDate !== "" && endDate !== ""){
+        if (startDate !== "" && endDate !== "") {
             var newStartDate = new Date(startDate).getTime();
             var newEndDate = new Date(endDate).getTime();
-            var urlDayAPI = urlAPI + "videos/api-response?start=" + newStartDate + "&end=" + newEndDate + "&api=" + idVideo;
+            var urlDayAPI = urlAPI + "api-response?start=" + newStartDate + "&end=" + newEndDate + "&api=" + idVideo;
             console.log(urlDayAPI);
             timeApiResponse.getDataFromApi(urlDayAPI);
         }
@@ -569,57 +628,68 @@ timeApiResponse = {
      *  Call api get data
      * @param urlApi
      */
-    getDataFromApi: function(urlApi) {
+    getDataFromApi: function (urlApi) {
         console.log(urlApi);
         $.ajax({
             type: "GET",
             url: urlApi,
             dataType: 'json',
             success: function (data) {
-                try{
+                try {
                     var dataDuration = data.content.data;
-                    $('.page-number').text(dataDuration.page_len);
-                    var listDurationAvg=[];
+                    var listDurationAvg = [];
                     var listDay = [];
                     var listHour = [];
                     var listMonth = [];
-                    for(var i = 0; i < dataDuration.length ; i++) {
-                        listDurationAvg.push(dataDuration[i].duration_avg/60000);
+                    for (var i = 0; i < dataDuration.length; i++) {
+                        listDurationAvg.push(parseFloat(dataDuration[i].duration_avg / 60000).toFixed(2));
                         listDay.push(convertDateToDayMonth(dataDuration[i].dt));
                         listHour.push(convertDateToHour(dataDuration[i].dt));
                         listMonth.push(convertDateToMonthYear(dataDuration[i].dt));
                     }
-                    switch (data.content.time){
+                    switch (data.content.time) {
                         case "HOUR" :
                             $(".time-type").text("giờ");
-                            timeApiResponseChart.everyHour(listDurationAvg,listHour);
+                            timeApiResponseChart.everyHour(listDurationAvg, listHour);
                             break;
                         case "DAY" :
                             $(".time-type").text("ngày");
-                            timeApiResponseChart.dailyTime(listDurationAvg,listDay);
+                            timeApiResponseChart.dailyTime(listDurationAvg, listDay);
                             break;
                         case "MONTH" :
                             $(".time-type").text("tháng");
-                            timeApiResponseChart.monthlyTime(listDurationAvg,listMonth);
+                            timeApiResponseChart.monthlyTime(listDurationAvg, listMonth);
                             break;
                     }
-                }catch (e){
-                    alert("Không có dữ liệu");
+                } catch (e) {
+                    console.log("Không có dữ liệu");
                 }
 
             }
+        });
+    },
+    updateListApi: function () {
+        var pageId = $('.page-number').text();
+        timeApiResponse.getListApi(pageId);
+        $('#sort-video').on('change', function () {
+            timeApiResponse.getListApi(pageId);
         });
     },
     /**
      *  get type and url api list api
      * @param pageId
      */
-    getListApi: function(pageId) {
-        var timeType = $('.time-type').text();
-        timeApiResponse.displayListApi(urlAPI + "videos/api-response?page=" + pageId);
+    getListApi: function (pageId) {
+        // var timeType = $('.time-type').text();
+            var typeList = $('#sort-video').find(":selected").val();
+            if (typeList === "increase") {
+                timeApiResponse.displayListApi(urlAPI + "api-response?page=" + pageId + "&sort=ASC");
+            } else {
+                timeApiResponse.displayListApi(urlAPI + "api-response?page=" + pageId + "&sort=DESC");
+            }
         // switch (timeType){
         //     case "giờ" :
-        //         var urlHourAPI = urlAPI + "videos?page=" + pageId;
+        //         var urlHourAPI = urlAPI + "?page=" + pageId;
         //         timePlay.displayListVideo(urlHourAPI);
         //         break;
         //     case "ngày" :
@@ -636,7 +706,7 @@ timeApiResponse = {
      *
      * @param urlListApi
      */
-    displayListApi: function(urlListApi) {
+    displayListApi: function (urlListApi) {
         var displayVideo = $('.display-list-api');
         var output = "";
         console.log(urlListApi);
@@ -646,10 +716,10 @@ timeApiResponse = {
             dataType: 'json',
             success: function (result) {
                 var listApi = result.content.data;
-                for(var i in listApi){
-                    output+="<tr><td>" + listApi[i].api + "</td><td>" + listApi[i].duration_avg + "</td>" +
-                        "</td><td><button class='btn btn-primary'  onclick=\" timeApiResponse.getTimeApiResponseChartById( '" + listApi[i].api+ "'); " +
-                        "updateNameVideo( '"+ listApi[i].api +"'); \">Xem thống kê</button></td></tr>";
+                for (var i in listApi) {
+                    output += "<tr><td>" + listApi[i].api + "</td><td>" + listApi[i].duration_avg + "</td>" +
+                        "</td><td><button class='btn btn-primary'  onclick=\" timeApiResponse.getTimeApiResponseChartById( '" + listApi[i].api + "'); " +
+                        "updateNameVideo( '" + listApi[i].api + "'); \">Xem thống kê</button></td></tr>";
                 }
                 displayVideo.html(output);
             }
@@ -658,9 +728,9 @@ timeApiResponse = {
     /**
      *  update data after click time type
      */
-    updateTimeTypeSelect: function() {
+    updateTimeTypeSelect: function () {
         var valueTimeType = $('#time-select').find(":selected").text();
-        if (valueTimeType === "Giờ"){
+        if (valueTimeType === "Giờ") {
             $('.end-date-form').hide();
         }
         $('#time-select').on('change', function () {
@@ -668,15 +738,15 @@ timeApiResponse = {
             // hien thi time type tren tieu de bieu do
             $('.time-type').text(" " + valueSelected);
             var idApi = $('.name-api').text();
-            if (valueSelected === "Giờ"){
+            if (valueSelected === "Giờ") {
                 $('.end-date-form').hide();
-            }else {
+            } else {
                 $('.end-date-form').show();
             }
-            if (idApi !== ""){
+            if (idApi !== "") {
                 timeApiResponse.getTimeApiResponseChartById(idApi);
-            }else {
-                alert("Bạn chưa chọn video!");
+            } else {
+                console.log("Bạn chưa chọn video!");
             }
 
         });
@@ -684,31 +754,37 @@ timeApiResponse = {
     /**
      * Update data after click select date time
      */
-    updateDateSelect: function() {
+    updateDateSelect: function () {
         var startDate = $('#start-date').val();
         $('#start-date').datepicker({
-            onSelect: function(dateText, inst) {
+            maxDate: moment().format('MM/DD/YYYY'),
+            onSelect: function (dateText, inst) {
                 var idApi = $('.name-api').text();
+                var startDate = $('#start-date').val();
                 var endDate = $('#end-date').val();
-                if(idApi === "" && endDate !== ""){
+                if (idApi === "" && endDate !== "") {
                     timeApiResponse.getTimeApiResponseChartTotal();
                 }
-                else{
+                else {
                     timeApiResponse.getTimeApiResponseChartById(idApi);
                 }
+                $("#end-date").datepicker("change", { minDate: moment(startDate).format('MM/DD/YYYY') });
             }
         });
         $('#end-date').datepicker({
-            minDate: new Date(startDate).getTime(),
-            onSelect: function(dateText, inst) {
-                var idApi= $('.name-video').text();
+            minDate: moment().add(-1,'days').format('MM/DD/YYYY'),
+            maxDate: moment().format('MM/DD/YYYY'),
+            onSelect: function (dateText, inst) {
+                var idApi = $('.name-video').text();
                 var startDate = $('#start-date').val();
-                if (startDate !== "" && idApi !== ""){
+                var endDate = $('#end-date').val();
+                if (startDate !== "" && idApi !== "") {
                     timeApiResponse.getTimeApiResponseChartById(idApi);
                 }
                 else {
                     timeApiResponse.getTimeApiResponseChartTotal();
                 }
+                $("#start-date").datepicker("change", { maxDate: moment(endDate).format('MM/DD/YYYY') });
             }
         });
     },
@@ -718,134 +794,215 @@ timeApiResponse = {
     paginationPage: function () {
         $.ajax({
             type: "GET",
-            url: urlAPI + "videos?page=0",
+            url: urlAPI + "api-response?page=0",
             dataType: 'json',
             success: function (data) {
-                var pageNumber = data.content.total_size;
-                var pagination  = "";
-                for (var i = 0 ; i < pageNumber ; i++){
-                    pagination+= " <li><a href=\"#\" onclick='timeApiResponse.getListApi("+ i +")'>"+ (i + 1) +"</a></li>";
+                var pageNumber = data.content.total_size/10;
+                var pagination = "";
+                for (var i = 0; i < pageNumber; i++) {
+                    pagination += " <li><a href=\"#\" onclick='timeApiResponse.getListApi(" + i + ")'>" + (i + 1) + "</a></li>";
                 }
                 $(".pagination").html(pagination);
                 $('.pagination li:first').addClass('active');
-                $( '.pagination li' ).on( 'click', function() {
-                    $( this ).parent().find( 'li.active' ).removeClass( 'active' );
-                    $( this ).addClass( 'active' );
+                $('.pagination li').on('click', function () {
+                    $(this).parent().find('li.active').removeClass('active');
+                    $(this).addClass('active');
+                    $('.page-number').val($(this).children().text());
                 });
             },
             error: function () {
-                alert("Error get list video!");
+                console.log("Error get list video!");
             }
         });
     }
 };
 /**
  *  Total function using in dashboard link die
- * @type {{getDataLinkDie: linkDie.getDataLinkDie, getDataFromApi: linkDie.getDataFromApi, getListLinkDie: linkDie.getListLinkDie, dashboardLinkDie: linkDie.dashboardLinkDie, displayListLinkDie: linkDie.displayListLinkDie, updateTimeTypeSelect: linkDie.updateTimeTypeSelect, updateDateSelect: linkDie.updateDateSelect, paginationPage: linkDie.paginationPage}}
+ * @type {{getDataLinkDie: linkDie.getDataLinkDie, getDataFromApi: linkDie.getDataFromApi, getlistVideo: linkDie.getlistVideo, dashboardLinkDie: linkDie.dashboardLinkDie, displaylistVideo: linkDie.displaylistVideo, updateTimeTypeSelect: linkDie.updateTimeTypeSelect, updateDateSelect: linkDie.updateDateSelect, paginationPage: linkDie.paginationPage}}
  */
 linkDie = {
+    getChartDefault: function () {
+        var dateNow = moment().format('MM/DD/YYYY');
+        var yesterday = moment().add(-1, 'days').format('MM/DD/YYYY');
+        $('#start-date').val(yesterday);
+        $('#end-date').val(dateNow);
+        // linkDie.getLinkDieChartTotal();
+        linkDieChart.everyHour();
+    },
+    getLinkDieChartTotal: function () {
+        var startDate = $('#start-date').val();
+        var endDate = $('#end-date').val();
+        if (startDate !== "") {
+            var newStartDate = new Date(startDate).getTime();
+            var newEndDate = new Date(endDate).getTime();
+            var url = urlAPI + "link-die?start=" + newStartDate + "&end=" + newEndDate;
+            console.log(url);
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: 'json',
+                success: function (data) {
+                    try {
+                        var dataDuration = data.content.data;
+                        var typeTime = data.content.time;
+                        var listDurationAvg = [];
+                        var listHour = [];
+                        var listDay = [];
+                        var listMonth = [];
+                        for (var i = 0; i < dataDuration.length; i++) {
+                            listDurationAvg.push(dataDuration[i].duration_avg / 60000);
+                            listDay.push(convertDateToDayMonth(dataDuration[i].dt));
+                            listHour.push(convertDateToHour(dataDuration[i].dt));
+                            listMonth.push(convertDateToMonthYear(dataDuration[i].dt));
+                        }
+                        if (typeTime === "HOUR") {
+                            $(".time-type").text("giờ");
+                            linkDieChart.everyHour(listDurationAvg, listHour);
+                        }
+                        else if (typeTime === "DAY") {
+                            $(".time-type").text("ngày");
+                            linkDieChart.dailyTime(listDurationAvg, listDay);
+                        }
+                        else {
+                            $(".time-type").text("tháng");
+                            linkDieChart.monthlyTime(listDurationAvg, listMonth);
+                        }
+                    } catch (e) {
+                        console.log("Không có dữ liệu!");
+                    }
+                },
+                error: function () {
+                    console.log("Error!");
+                }
+            });
+        }
+    },
     /**
      *
      */
-    getDataLinkDie: function() {
+    getDataLinkDie: function () {
         var startDate = $('#start-date').val();
         var endDate = $('#end-date').val();
-        if (startDate !== ""){
+        if (startDate !== "") {
             var timeType = $('#time-select').find(":selected").val();
             var newStartDate = new Date(startDate).getTime();
             var newEndDate = new Date(endDate).getTime();
-            switch (timeType){
+            switch (timeType) {
                 case "HOUR" :
-                    var urlHourAPI = "api?type=" + timeType + "&day=" + newStartDate;
+                    var urlHourAPI = "link-die?type=" + timeType + "&day=" + newStartDate;
                     linkDie.getDataFromApi(urlHourAPI);
                     break;
                 case "DAY" :
-                    var urlDayAPI = "api?type=" + timeType + "&startDay=" + newStartDate + "&endDay=" + newEndDate;
+                    var urlDayAPI = "link-die?type=" + timeType + "&startDay=" + newStartDate + "&endDay=" + newEndDate;
                     linkDie.getDataFromApi(urlDayAPI);
                     break;
                 case "MONTH" :
-                    var urlMonthAPI = "api";
+                    var urlMonthAPI = "link-die";
                     linkDie.getDataFromApi(urlMonthAPI);
                     break;
             }
-        }else {
-            alert("Ngày chưa được chọn");
+        } else {
+            console.log("Ngày chưa được chọn");
         }
 
+    },
+    getLinkDieById: function (idVideo) {
+        var startDate = $('#start-date').val();
+        var endDate = $('#end-date').val();
+        if (startDate !== "" && endDate !== "") {
+            var newStartDate = new Date(startDate).getTime();
+            var newEndDate = new Date(endDate).getTime();
+            var urlDayAPI = urlAPI + "link-die?start=" + newStartDate + "&end=" + newEndDate + "&post_id=" + idVideo;
+            console.log(urlDayAPI);
+            linkDie.getDataFromApi(urlDayAPI);
+        }
     },
     /**
      * call api get data
      * @param urlApi
      */
-    getDataFromApi: function(urlApi) {
+    getDataFromApi: function (urlApi) {
         $.ajax({
             type: "GET",
             url: urlApi,
             dataType: 'json',
             success: function (data) {
-                var dataDuration = data.data;
-                var listDurationAvg=[];
-                var listDay = [];
-                for(var i = 0; i < dataDuration.length ; i++) {
-                    listDurationAvg.push(dataDuration[i].duration_avg);
-                    listDay.push(convertDateToDayMonth(dataDuration[i].dt));
-                }
-                switch (data.type){
-                    case "HOUR" :
-                        linkDieChart.everyHour(listDurationAvg);
-                        break;
-                    case "DAY" :
-                        linkDieChart.dailyTime(listDurationAvg,listDay);
-                        break;
-                    case "MONTH" :
-                        linkDieChart.monthlyTime(listDurationAvg);
-                        break;
+                try {
+                    var dataDuration = data.content.data;
+                    var listDurationAvg = [];
+                    var listDay = [];
+                    var listHour = [];
+                    var listMonth = [];
+                    for (var i = 0; i < dataDuration.length; i++) {
+                        listDurationAvg.push(dataDuration[i].duration_avg / 60000);
+                        listDay.push(convertDateToDayMonth(dataDuration[i].dt));
+                        listHour.push(convertDateToHour(dataDuration[i].dt));
+                        listMonth.push(convertDateToMonthYear(dataDuration[i].dt));
+                    }
+                    console.log(listDay);
+                    switch (data.content.time) {
+                        case "HOUR" :
+                            $(".time-type").text("giờ");
+                            linkDie.everyHour(listDurationAvg, listHour);
+                            break;
+                        case "DAY" :
+                            $(".time-type").text("ngày");
+                            linkDie.dailyTime(listDurationAvg, listDay);
+                            break;
+                        case "MONTH" :
+                            $(".time-type").text("tháng");
+                            linkDie.monthlyTime(listDurationAvg, listMonth);
+                            break;
+                    }
+                } catch (e) {
+                    console.log("Không có dữ liệu");
                 }
             }
         });
     },
     /**
-     *  get list link die
+     *  get list video
      */
-    getListLinkDie: function() {
-        var timeType = $('#time-select').find(":selected").val();
-        switch (timeType){
-            case "HOUR" :
-                var urlHourAPI = "http://www.mocky.io/v2/5b2885122f00002c00f55d1a";
-                linkDie.displayListLinkDie(urlHourAPI);
-                break;
-            case "DAY" :
-                var urlDayAPI = "http://www.mocky.io/v2/5b29c3f12f00008d00f56210";
-                linkDie.displayListLinkDie(urlDayAPI);
-                break;
-            case "MONTH" :
-                var urlMonthAPI = "http://www.mocky.io/v2/5b29c4f42f00008d00f5621b";
-                linkDie.displayListLinkDie(urlMonthAPI);
-                break;
-        }
+    getListVideo: function (pageId) {
+        linkDie.displayListVideo(urlAPI + "videos?page=" + pageId);
+        var timeType = $('.time-type').text();
+        $('#sort-video').on('change', function () {
+            var typeList = $('#sort-video').find(":selected").val();
+            if (typeList === "increase") {
+                linkDie.displayListVideo(urlAPI + "videos?page=" + pageId + "&sort=ASC");
+            } else {
+                linkDie.displayListVideo(urlAPI + "videos?page=" + pageId + "&sort=DESC");
+            }
+        });
+        // switch (timeType) {
+        //     case "HOUR" :
+        //         var urlHourAPI = "http://www.mocky.io/v2/5b2885122f00002c00f55d1a";
+        //         linkDie.displaylistVideo(urlHourAPI);
+        //         break;
+        //     case "DAY" :
+        //         var urlDayAPI = "http://www.mocky.io/v2/5b29c3f12f00008d00f56210";
+        //         linkDie.displaylistVideo(urlDayAPI);
+        //         break;
+        //     case "MONTH" :
+        //         var urlMonthAPI = "http://www.mocky.io/v2/5b29c4f42f00008d00f5621b";
+        //         linkDie.displaylistVideo(urlMonthAPI);
+        //         break;
+        // }
     },
     /**
      *
+     * @param urlListVideo
      */
-    dashboardLinkDie: function () {
-      $('#dashboard-link-die').on('click',function () {
-          linkDie.getDataLinkDie();
-      })
-    },
-    /**
-     *
-     * @param urlListLinkDie
-     */
-    displayListLinkDie: function(urlListLinkDie) {
-        var displayVideo = $('.display-list-link-die');
+    displayListVideo: function (urlListVideo) {
+        var displayVideo = $('.display-list-video');
         var output = "";
         $.ajax({
             type: "GET",
-            url: urlListLinkDie,
+            url: urlListVideo,
             success: function (result) {
-                for(var i in result){
-                    output+="<tr><td>" + result[i].id + "</td><td>" + result[i].name + "</td><td>" + result[i].duration_avg + "</td>" +
-                        "</td><td><button class='btn btn-primary'  onclick=\" linkDie.linkDieChartById( " + result[i].id+ "); updateNameVideo(  " + result[i].id+ " , '"+ result[i].name +"'); \">Xem thống kê</button></td></tr>";
+                for (var i in result) {
+                    output += "<tr><td>" + result[i].id + "</td><td>" + result[i].name + "</td><td>" + result[i].duration_avg + "</td>" + "</td><td>" + result[i].name + "</td><td>" +
+                        "</td><td><button class='btn btn-primary'  onclick=\" linkDie.getLinkDieById( " + result[i].id + "); updateNameVideo(  " + result[i].id + " , '" + result[i].name + "'); \">Xem thống kê</button></td></tr>";
                 }
                 displayVideo.html(output);
             }
@@ -854,22 +1011,22 @@ linkDie = {
     /**
      * update data after change type time
      */
-    updateTimeTypeSelect: function() {
+    updateTimeTypeSelect: function () {
         var valueTimeType = $('#time-select').find(":selected").text();
-        if (valueTimeType === "Giờ"){
+        if (valueTimeType === "Giờ") {
             $('.end-date-form').hide();
         }
         $('#time-select').on('change', function () {
             var valueSelected = $('#time-select').find(":selected").text();
             $('.time-type').text(" " + valueSelected);
-            linkDie.getListLinkDie(0);
+            linkDie.getlistVideo(0);
             var idVideo = $('.name-video').text();
-            if(valueSelected === "Giờ"){
+            if (valueSelected === "Giờ") {
                 $('.end-date-form').hide();
-            }else {
+            } else {
                 $('.end-date-form').show();
             }
-            if (idVideo !== ""){
+            if (idVideo !== "") {
                 linkDie.linkDieChartById(idVideo);
             }
 
@@ -878,24 +1035,36 @@ linkDie = {
     /**
      * update data after select date time
      */
-    updateDateSelect: function() {
+    updateDateSelect: function () {
         $('#start-date').datepicker({
-            onSelect: function(dateText, inst) {
+            maxDate: moment().format('MM/DD/YYYY'),
+            onSelect: function (dateText, inst) {
                 var idVideo = $('.name-video').text();
+                var startDate = $('#start-date').val();
                 var endDate = $('#end-date').val();
-                var valueTimeType = $('#time-select').find(":selected").text();
-                if (endDate !== "" || valueTimeType === "Giờ" && idVideo !== ""){
-                    // linkDie.(idVideo);
+                if (idVideo === "" && endDate !== "") {
+                    linkDie.getLinkDieChartTotal();
                 }
+                else {
+                    linkDie.getLinkDieChartById(idVideo);
+                }
+                $("#end-date").datepicker("change", { minDate: moment(startDate).format('MM/DD/YYYY') });
             }
         });
         $('#end-date').datepicker({
-            onSelect: function(dateText, inst) {
+            minDate: moment().add(-1,'days').format('MM/DD/YYYY'),
+            maxDate: moment().format('MM/DD/YYYY'),
+            onSelect: function (dateText, inst) {
                 var idVideo = $('.name-video').text();
                 var startDate = $('#start-date').val();
-                if (startDate !== "" && idVideo !== ""){
-                    // linkDie.getTimePlayChartById(idVideo);
+                var endDate = $('#end-date').val();
+                if (startDate !== "" && idVideo !== "") {
+                    linkDie.getLinkDieChartById(idVideo);
                 }
+                else {
+                    linkDie.getLinkDieChartTotal();
+                }
+                $("#start-date").datepicker("change", { maxDate: moment(endDate).format('MM/DD/YYYY') });
             }
         });
     },
@@ -903,16 +1072,16 @@ linkDie = {
      * pagination page after get list video
      */
     paginationPage: function () {
-        var pagination  = "";
+        var pagination = "";
         var numberPage = $('.page-number').text();
-        for (var i = 0 ; i < numberPage ; i++){
-            pagination+= " <li><a href=\"#\" onclick='timePlay.getListVideo("+ i +")'>"+ (i + 1) +"</a></li>";
+        for (var i = 0; i < numberPage; i++) {
+            pagination += " <li><a href=\"#\" onclick='linkDie.getListVideo(" + i + ")'>" + (i + 1) + "</a></li>";
         }
         $(".pagination").html(pagination);
         $('.pagination li:first').addClass('active');
-        $( '.pagination li').on( 'click', function() {
-            $( this ).parent().find('li.active').removeClass('active');
-            $( this ).addClass('active');
+        $('.pagination li').on('click', function () {
+            $(this).parent().find('li.active').removeClass('active');
+            $(this).addClass('active');
         });
     }
 };
@@ -958,8 +1127,9 @@ function convertDateToHour(datetimeStamp) {
     var date = new Date(datetimeStamp);
     return date.getHours();
 }
+
 function convertDateToMonthYear(datetimeStamp) {
     var date = new Date(datetimeStamp);
-    var newDate = (date.getMonth() + 1 ) + "/" + date.getFullYear();
+    var newDate = (date.getMonth() + 1) + "/" + date.getFullYear();
     return newDate;
 }
