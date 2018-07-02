@@ -9,7 +9,7 @@ timePlay = {
         var dateNow = moment().format('MM/DD/YYYY');
         var yesterday = moment().add(-1, 'days').format('MM/DD/YYYY');
         $('#start-date').val(yesterday);
-        $('#end-date').val(dateNow);
+        $('#end-date').val(yesterday);
         timePlay.getTimePlayChartTotal();
     },
     /**
@@ -256,21 +256,27 @@ timePlay = {
             success: function (data) {
                 var pageNumber = data.content.total_size / 10;
                 var pagination = "";
-                for (var i = 0; i < pageNumber; i++) {
-                    pagination += " <li><a href=\"#\" onclick='timePlay.getListVideo(" + i + ")'>" + (i + 1) + "</a></li>";
-                }
-                // pagination+= "<li><a>....</a></li>";
-                // for(var i = pageNumber ; i > pageNumber - 5 ; i--){
-                //     pagination+= " <li><a href=\"#\" onclick='timePlay.getListVideo("+ i +")'>"+ (i + 1) +"</a></li>";
-                // }
-                $(".pagination").html(pagination);
-                $('.pagination li:first').addClass('active');
-                $('.page-number').val(0);
-                $('.pagination li').on('click', function () {
-                    $(this).parent().find('li.active').removeClass('active');
-                    $(this).addClass('active');
-                    $('.page-number').val($(this).children().text());
+                $('.pagination').twbsPagination({
+                    totalPages: pageNumber,
+                    visiblePages: 6,
+                    next: 'Next',
+                    prev: 'Prev',
+                    onPageClick: function (event, page) {
+                        //fetch content and render here
+                        timePlay.getListVideo(page -1 );
+                    }
                 });
+                // for (var i = 0; i < pageNumber; i++) {
+                //     pagination += " <li><a href=\"#\" onclick='timePlay.getListVideo(" + i + ")'>" + (i + 1) + "</a></li>";
+                // }
+                // $(".pagination").html(pagination);
+                // $('.pagination li:first').addClass('active');
+                // $('.page-number').val(0);
+                // $('.pagination li').on('click', function () {
+                //     $(this).parent().find('li.active').removeClass('active');
+                //     $(this).addClass('active');
+                //     $('.page-number').val($(this).children().text());
+                // });
             },
             error: function () {
                 console.log("Error get list video!");
@@ -287,7 +293,7 @@ timeView = {
         var dateNow = moment().format('MM/DD/YYYY');
         var yesterday = moment().add(-1, 'days').format('MM/DD/YYYY');
         $('#start-date').val(yesterday);
-        $('#end-date').val(dateNow);
+        $('#end-date').val(yesterday);
         timeView.getTimeViewChartTotal();
     },
     /**
@@ -522,21 +528,27 @@ timeView = {
             dataType: 'json',
             success: function (data) {
                 var pageNumber = data.content.total_size/10;
-                var pagination = "";
-                for (var i = 0; i < pageNumber; i++) {
-                    pagination += "<li><a href=\"#\" onclick='timeView.getListVideo(" + i + ")'>" + (i + 1) + "</a></li>";
-                }
-                // pagination+= "<li><a>....</a></li>";
-                // for(var i = pageNumber ; i > pageNumber - 5 ; i--){
-                //     pagination+= " <li><a href=\"#\" onclick='timeView.getListVideo("+ i +")'>"+ (i + 1) +"</a></li>";
-                // }
-                $(".pagination").html(pagination);
-                $('.pagination li:first').addClass('active');
-                $('.pagination li').on('click', function () {
-                    $(this).parent().find('li.active').removeClass('active');
-                    $(this).addClass('active');
-                    $('.page-number').val($(this).children().text());
+                $('.pagination').twbsPagination({
+                    totalPages: pageNumber,
+                    visiblePages: 6,
+                    next: 'Next',
+                    prev: 'Prev',
+                    onPageClick: function (event, page) {
+                        //fetch content and render here
+                        timeView.getListVideo(page - 1 );
+                    }
                 });
+                // var pagination = "";
+                // for (var i = 0; i < pageNumber; i++) {
+                //     pagination += "<li><a href=\"#\" onclick='timeView.getListVideo(" + i + ")'>" + (i + 1) + "</a></li>";
+                // }
+                // $(".pagination").html(pagination);
+                // $('.pagination li:first').addClass('active');
+                // $('.pagination li').on('click', function () {
+                //     $(this).parent().find('li.active').removeClass('active');
+                //     $(this).addClass('active');
+                //     $('.page-number').val($(this).children().text());
+                // });
             },
             error: function () {
                 console.log("Error get list video!");
@@ -554,7 +566,7 @@ timeApiResponse = {
         var dateNow = moment().format('MM/DD/YYYY');
         var yesterday = moment().add(-1, 'days').format('MM/DD/YYYY');
         $('#start-date').val(yesterday);
-        $('#end-date').val(dateNow);
+        $('#end-date').val(yesterday);
         timeApiResponse.getTimeApiResponseChartTotal();
     },
     /**
@@ -798,17 +810,28 @@ timeApiResponse = {
             dataType: 'json',
             success: function (data) {
                 var pageNumber = data.content.total_size/10;
-                var pagination = "";
-                for (var i = 0; i < pageNumber; i++) {
-                    pagination += " <li><a href=\"#\" onclick='timeApiResponse.getListApi(" + i + ")'>" + (i + 1) + "</a></li>";
-                }
-                $(".pagination").html(pagination);
-                $('.pagination li:first').addClass('active');
-                $('.pagination li').on('click', function () {
-                    $(this).parent().find('li.active').removeClass('active');
-                    $(this).addClass('active');
-                    $('.page-number').val($(this).children().text());
+                $('.pagination').twbsPagination({
+                    totalPages: pageNumber,
+                    visiblePages: 6,
+                    next: 'Next',
+                    prev: 'Prev',
+                    onPageClick: function (event, page) {
+                        //fetch content and render here
+                        timeApiResponse.getListApi(page -1 );
+                    }
                 });
+                // var pagination = "";
+                //
+                // for (var i = 0; i < pageNumber; i++) {
+                //     pagination += " <li><a href=\"#\" onclick='timeApiResponse.getListApi(" + i + ")'>" + (i + 1) + "</a></li>";
+                // }
+                // $(".pagination").html(pagination);
+                // $('.pagination li:first').addClass('active');
+                // $('.pagination li').on('click', function () {
+                //     $(this).parent().find('li.active').removeClass('active');
+                //     $(this).addClass('active');
+                //     $('.page-number').val($(this).children().text());
+                // });
             },
             error: function () {
                 console.log("Error get list video!");
@@ -825,7 +848,7 @@ linkDie = {
         var dateNow = moment().format('MM/DD/YYYY');
         var yesterday = moment().add(-1, 'days').format('MM/DD/YYYY');
         $('#start-date').val(yesterday);
-        $('#end-date').val(dateNow);
+        $('#end-date').val(yesterday);
         // linkDie.getLinkDieChartTotal();
         linkDieChart.everyHour();
     },
@@ -1088,16 +1111,38 @@ linkDie = {
      * pagination page after get list video
      */
     paginationPage: function () {
-        var pagination = "";
-        var numberPage = $('.page-number').text();
-        for (var i = 0; i < numberPage; i++) {
-            pagination += " <li><a href=\"#\" onclick='linkDie.getListVideo(" + i + ")'>" + (i + 1) + "</a></li>";
-        }
-        $(".pagination").html(pagination);
-        $('.pagination li:first').addClass('active');
-        $('.pagination li').on('click', function () {
-            $(this).parent().find('li.active').removeClass('active');
-            $(this).addClass('active');
+        $.ajax({
+            type: "GET",
+            url: urlAPI + "api-response?page=0",
+            dataType: 'json',
+            success: function (data) {
+                var pageNumber = data.content.total_size/10;
+                $('.pagination').twbsPagination({
+                    totalPages: pageNumber,
+                    visiblePages: 6,
+                    next: 'Next',
+                    prev: 'Prev',
+                    onPageClick: function (event, page) {
+                        //fetch content and render here
+                        linkDie.getListVideo(page -1 );
+                    }
+                });
+                // var pagination = "";
+                //
+                // for (var i = 0; i < pageNumber; i++) {
+                //     pagination += " <li><a href=\"#\" onclick='timeApiResponse.getListApi(" + i + ")'>" + (i + 1) + "</a></li>";
+                // }
+                // $(".pagination").html(pagination);
+                // $('.pagination li:first').addClass('active');
+                // $('.pagination li').on('click', function () {
+                //     $(this).parent().find('li.active').removeClass('active');
+                //     $(this).addClass('active');
+                //     $('.page-number').val($(this).children().text());
+                // });
+            },
+            error: function () {
+                console.log("Error get list video!");
+            }
         });
     }
 };

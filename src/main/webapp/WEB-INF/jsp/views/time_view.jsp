@@ -346,6 +346,7 @@
 <script src="assets/js/moment.js"></script>
 <!-- Include Date Range Picker -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.1/jquery.twbsPagination.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         timeView.paginationPage();

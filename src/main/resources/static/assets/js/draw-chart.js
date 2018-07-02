@@ -280,7 +280,7 @@ timeApiResponseChart = {
                 tension: 0
             }),
             chartPadding: {
-                top: 0,
+                top: 5,
                 right: 0,
                 bottom: 0,
                 left: 25
@@ -323,7 +323,7 @@ timeApiResponseChart = {
                 tension: 0
             }),
             chartPadding: {
-                top: 0,
+                top: 10,
                 right: 0,
                 bottom: 0,
                 left: 25

@@ -209,8 +209,8 @@
                                     <div class="nav navbar-right">
                                         <span class="sort-text">Sắp xếp theo </span>
                                         <select class="form-control" id="sort-video">
-                                            <option value="reduction">Thời gian giảm dần</option>
-                                            <option value="increase">Thời gian tăng dần</option>
+                                            <option value="reduction">Giảm dần</option>
+                                            <option value="increase">Tăng dần</option>
                                         </select>
                                     </div>
                                     <thead class="text-primary">
@@ -316,6 +316,7 @@
 <script src="assets/js/moment.js"></script>
 <!-- Include Date Range Picker -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.1/jquery.twbsPagination.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         // Javascript method's body can be found in assets/js/demos.js

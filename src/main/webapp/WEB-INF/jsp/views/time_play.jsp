@@ -22,7 +22,9 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons" rel='stylesheet'>
     <link href="assets/css/style.css" rel="stylesheet"/>
-
+    <%--<!--Test table filter -->--%>
+    <%--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>--%>
+    <%--<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>--%>
 
 </head>
 
@@ -236,6 +238,9 @@
                             </div>
                             <div class="card-content table-responsive">
                                 <table class="table" id="list-video-table">
+                                    <%--<div class="nav navbar-left">--%>
+                                        <%--<input type="text" id="myInput" placeholder="Search for names.." title="Type in a name">--%>
+                                    <%--</div>--%>
                                     <div class="nav navbar-right">
                                         <span class="sort-text">Sắp xếp theo </span>
                                         <select class="form-control" id="sort-video">
@@ -298,6 +303,7 @@
 <script src="assets/js/moment.js"></script>
 <!-- Include Date Range Picker -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.1/jquery.twbsPagination.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         timePlay.paginationPage();
@@ -305,6 +311,12 @@
         timePlay.updateDateSelect();
         timePlay.getChartDefault();
         //dashboardTotal();
+        // $("#myInput").on("keyup", function() {
+        //     var value = $(this).val().toLowerCase();
+        //     $(".display-list-video tr").filter(function() {
+        //         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        //     });
+        // });
     });
     // timePlay.updateTimeTypeSelect();
 </script>
